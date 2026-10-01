@@ -1,111 +1,196 @@
+/* Import Inconsolata font */
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap');
+
+/* Global variables */
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  --bg-color: #f4f4f0;
+  --main-color: #000000;
+  --accent-color: #000080;
+  --border-width: 2px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-body {
-  margin: 0;
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+/*  */
+header, footer {
+  width: 100%;
+  background-color: var(--bg-color);
+  border-bottom: var(--border-width) solid var(--main-color);
+  padding: 16px 20px;
   box-sizing: border-box;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+header {
+  width: 100%;
+  background-color: var(--bg-color);
+  padding: 16px 20px;
+  box-sizing: border-box;
+  border-bottom: 6px double var(--main-color);
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
+footer {
+  border-bottom: none;
+  border-top: var(--border-width) solid var(--main-color);
 }
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
+
+/* Base reset and typography */
+html, body {
   margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--main-color);
+  font-family: 'Inconsolata', monospace;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.2'/%3E%3C/svg%3E");
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+/* Firefox scrollbar support */
+html {
+  scrollbar-width: auto;
+  scrollbar-color: var(--main-color) var(--bg-color);
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+/* Global text spacing */
+p, h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+/* Text Selection */
+::selection {
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+}
+
+/* Custom Retro Scrollbar */
+::-webkit-scrollbar {
+  width: 16px;
+  background: var(--bg-color);
+  border-left: var(--border-width) solid var(--main-color);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--bg-color);
+  border: var(--border-width) solid var(--main-color);
+}
+
+/* Retro button styles */
+button, .btn {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 8px 16px;
+  margin: 4px;
+  cursor: pointer;
+  background-color: var(--bg-color);
+  color: var(--main-color);
+  border: var(--border-width) solid var(--main-color);
+  box-sizing: border-box;
+  transition: none;
+}
+
+/* Hover: Tighter double inner border */
+button:hover, .btn:hover {
+  box-shadow: 
+    inset 0 0 0 1px var(--bg-color), 
+    inset 0 0 0 3px var(--main-color);
+}
+
+/* Remove background from buttons wrapped in links */
+a:has(button):hover, 
+a:has(.btn):hover {
+  background-color: transparent;
+}
+
+/* Active and Toggled states */
+button:active, .btn:active, 
+button.active, .btn.active {
+  background-color: var(--main-color);
+  color: var(--bg-color);
+  box-shadow: none;
+}
+
+/* Main layout wrapper */
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Sections spacing */
+section {
+  margin-bottom: 32px;
+}
+
+/* Retro card/panel */
+article, .panel {
+  background-color: var(--bg-color);
+  border: var(--border-width) solid var(--main-color);
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 4px 4px 0px 0px var(--main-color);
+}
+
+/* Square responsive images */
+img {
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  border: var(--border-width) solid var(--main-color);
+  box-shadow: 4px 4px 0px 0px var(--main-color);
+  margin-bottom: 16px;
+}
+
+img.retro-filter {
+  filter: grayscale(100%);
+}
+
+/* Links */
+a {
+  color: var(--main-color);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+a:hover {
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+  text-decoration: none;
+}
+
+/* Form labels */
+label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Forms & Inputs */
+input, textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  background-color: var(--bg-color);
+  color: var(--main-color);
+  border: var(--border-width) solid var(--main-color);
+  padding: 8px;
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 16px;
+  border-radius: 0;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--main-color);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 600px) {
+  main {
+    padding: 10px;
+  }
+  
+  article, .panel {
+    padding: 12px;
+  }
 }

@@ -1,0 +1,30 @@
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.header-slide-enter {
+  transform: translateY(-100%);
+}
+.header-slide-enter-active {
+  transform: translateY(0);
+  transition: transform 300ms;
+}
+.header-slide-enter-done {
+  transform: translateY(0);
+}
+
+.header-slide-exit {
+  transform: translateY(0);
+}
+.header-slide-exit-active {
+  transform: translateY(-100%);
+  transition: transform 300ms;
+}
+.header-slide-exit-done {
+  transform: translateY(-100%);
+}

@@ -1,15 +1,9 @@
 {
   "header": {
-    "title": "Mi Web Personal",
+    "title": "Portfolio Personal de Fran",
     "home": "Inicio",
-    "projects": "Proyectos"
-  },
-  "home": {
-    "welcome": "Bienvenido a mi portafolio",
-    "description": "Esta es una vista de pruebas para probar frameworks CSS."
-  },
-  "buttons": {
-    "switch_es": "Español",
-    "switch_en": "Inglés"
+    "projects": "Proyectos",
+    "blog": "Blog",
+    "contact": "Contacto"
   }
 }

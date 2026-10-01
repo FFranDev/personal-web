@@ -1,16 +1,10 @@
 
 {
   "header": {
-    "title": "My Personal Web",
+    "title": "Fran's Personal Portfolio",
     "home": "Home",
-    "projects": "Projects"
-  },
-  "home": {
-    "welcome": "Welcome to my portfolio",
-    "description": "This is a sandbox layout to test different CSS frameworks."
-  },
-  "buttons": {
-    "switch_es": "Spanish",
-    "switch_en": "English"
+    "projects": "Projects",
+    "blog": "Blog",
+    "contact": "Contact"
   }
 }
