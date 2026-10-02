@@ -1,6 +1,12 @@
 {
   "header": {
-    "title": "Portfolio Personal de Fran",
+    "titleBase": "FranFdez",
+    "titleSuffixes": [
+      " - Portfolio personal...",
+      " - Sitio de desarrollo...",
+      " - Espacio personal..."
+    ],
+
     "home": "Inicio",
     "projects": "Proyectos",
     "blog": "Blog",

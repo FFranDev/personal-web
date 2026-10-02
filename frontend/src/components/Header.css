@@ -28,3 +28,41 @@
 .header-slide-exit-done {
   transform: translateY(-100%);
 }
+
+.nav-btn {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.header-title {
+  margin: 0;
+  font-size: 1.5rem;
+  text-align: left; 
+  width: 420px; 
+}
+
+/* Cursor effect */
+.header-title::after {
+  content: "█";
+  color: var(--main-color);
+  animation: parpadeo 1s step-end infinite;
+}
+
+@keyframes parpadeo {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@media (max-width: 600px) {
+  .header-title {
+    width: auto;
+    min-width: 300px;
+    margin: 0 auto;
+  }
+}
