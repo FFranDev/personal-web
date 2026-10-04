@@ -3,28 +3,47 @@ import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CSSTransition } from 'react-transition-group';
 import { useTypewriter } from '../hooks/useTypewriter';
+import logoIcon from '../assets/logo.svg';
 import './Header.css';
 
 function Header() {
   const [t, i18n] = useTranslation("global");
   const [isVisible, setIsVisible] = useState(true);
-  const location = useLocation();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1000);
+  
+  const location = useLocation();
   const lastScrollY = useRef(0);
   const nodeRef = useRef(null);
+  const navRef = useRef(null); // Reference for the scrolling navigation container
 
   const baseText = t("header.titleBase");
   const suffixes = t("header.titleSuffixes", { returnObjects: true });
 
-  // Add suffixes to the base text for the typewriter effect
-  const typingText = useTypewriter(baseText, suffixes);
+  const typingText = useTypewriter(baseText, suffixes, 150, 50, 3000);
 
+  // Handle window resize to determine if it's mobile view
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 1000);
+      if (window.innerWidth > 1000) {
+        setIsMobileMenuOpen(false); 
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Handle scroll to show/hide header
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       
       if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
         setIsVisible(false);
+        setIsMobileMenuOpen(false); 
       } else if (currentScrollY < lastScrollY.current) {
         setIsVisible(true);
       }
@@ -36,9 +55,19 @@ function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Reset scroll position when mobile menu is opened
+  useEffect(() => {
+    if (isMobileMenuOpen && navRef.current) {
+      navRef.current.scrollLeft = 0;
+    }
+  }, [isMobileMenuOpen]);
+
   const changeLanguage = (lang) => {
     i18n.changeLanguage(lang);
   };
+
+  // Determine which title to display based on device type
+  const displayText = isMobile ? baseText : typingText;
 
   return (
     <CSSTransition
@@ -48,57 +77,64 @@ function Header() {
       classNames="header-slide"
     >
       <header ref={nodeRef} className="fixed-header">
-        <div 
-          className="title-bar" 
-          style={{ 
-            minHeight: "70px", 
-            padding: "10px 15px", 
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "space-between" 
-          }}
-        >
-          <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
-            <button 
-              className={`btn ${i18n.language === 'es' ? 'active' : ''}`} 
-              onClick={() => changeLanguage("es")}
-            >
-              ES
-            </button>
-            <button 
-              className={`btn ${i18n.language === 'en' ? 'active' : ''}`} 
-              onClick={() => changeLanguage("en")}
-            >
-              EN
-            </button>
+        <div className="title-bar">
+
+          <div className="title-wrapper">
+            <img src={logoIcon} alt="Icon" className="header-logo" />
+            <h1 className="header-title">
+              {displayText}
+            </h1>
           </div>
 
-          <h1 className="header-title" style={{ flexGrow: 1, margin: "0 500px" }}>
-            {typingText}
-          </h1>
+          <div className="controls-container">
+            <button 
+              className={`btn hamburger-btn ${isMobileMenuOpen ? 'active' : ''}`}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle navigation"
+            >
+              ☰
+            </button>
 
-          <nav className="field-row" style={{ margin: 0, display: "flex", gap: "8px" }}>
-            <Link to="/" style={{ pointerEvents: location.pathname === '/' ? 'none' : 'auto' }} tabIndex={-1}>
-              <button className={`btn nav-btn ${location.pathname === '/' ? 'active' : ''}`}>
-                {t("header.home")}
-              </button>
-            </Link>
-            <Link to="/projects" style={{ pointerEvents: location.pathname === '/projects' ? 'none' : 'auto' }} tabIndex={-1}>
-              <button className={`btn nav-btn ${location.pathname === '/projects' ? 'active' : ''}`}>
-                {t("header.projects")}
-              </button>
-            </Link>
-            <Link to="/blog" style={{ pointerEvents: location.pathname === '/blog' ? 'none' : 'auto' }} tabIndex={-1}>
-              <button className={`btn nav-btn ${location.pathname === '/blog' ? 'active' : ''}`}>
-                {t("header.blog")}
-              </button>
-            </Link>
-            <Link to="/contact" style={{ pointerEvents: location.pathname === '/contact' ? 'none' : 'auto' }} tabIndex={-1}>
-              <button className={`btn nav-btn ${location.pathname === '/contact' ? 'active' : ''}`}>
-                {t("header.contact")}
-              </button>
-            </Link>
-          </nav>
+            {/* Added ref={navRef} to control scroll position */}
+            <nav ref={navRef} className={`field-row header-nav ${isMobileMenuOpen ? 'open' : ''}`}>
+              <div className="lang-buttons">
+                <button 
+                  className={`btn ${i18n.language === 'es' ? 'active' : ''}`} 
+                  onClick={() => changeLanguage("es")}
+                >
+                  ES
+                </button>
+                <button 
+                  className={`btn ${i18n.language === 'en' ? 'active' : ''}`} 
+                  onClick={() => changeLanguage("en")}
+                >
+                  EN
+                </button>
+              </div>
+
+              <Link to="/" className={location.pathname === '/' ? 'disabled-link' : ''} tabIndex={-1}>
+                <button className={`btn nav-btn ${location.pathname === '/' ? 'active' : ''}`}>
+                  {t("header.home")}
+                </button>
+              </Link>
+              <Link to="/projects" className={location.pathname === '/projects' ? 'disabled-link' : ''} tabIndex={-1}>
+                <button className={`btn nav-btn ${location.pathname === '/projects' ? 'active' : ''}`}>
+                  {t("header.projects")}
+                </button>
+              </Link>
+              <Link to="/blog" className={location.pathname === '/blog' ? 'disabled-link' : ''} tabIndex={-1}>
+                <button className={`btn nav-btn ${location.pathname === '/blog' ? 'active' : ''}`}>
+                  {t("header.blog")}
+                </button>
+              </Link>
+              <Link to="/contact" className={location.pathname === '/contact' ? 'disabled-link' : ''} tabIndex={-1}>
+                <button className={`btn nav-btn ${location.pathname === '/contact' ? 'active' : ''}`}>
+                  {t("header.contact")}
+                </button>
+              </Link>
+            </nav>
+          </div>
+
         </div>
         <div className="separator"></div>
       </header>

@@ -1,12 +1,18 @@
 {
   "header": {
-    "titleBase": "FranFdez",
+    "titleBase": "C:\\FranFdez>",
     "titleSuffixes": [
-      " - Portfolio personal...",
-      " - Sitio de desarrollo...",
-      " - Espacio personal..."
+      "/pages/sobre_mi.html",
+      "code /src/App.vue",
+      "cat /config/ajustes.json",
+      "npm run dev",
+      "vim /styles/globales.css",
+      "mkdir /projects/nueva_idea",
+      "ls -la /components",
+      "/public/assets/logo.svg",
+      "git commit -m 'mejoras_visuales'",
+      "./scripts/despliegue.sh"
     ],
-
     "home": "Inicio",
     "projects": "Proyectos",
     "blog": "Blog",

@@ -17,45 +17,41 @@ export const useTypewriter = (baseText, suffixes, typingSpeed = 150, deletingSpe
     const currentSuffixes = JSON.parse(stableSuffixes);
     if (!currentSuffixes || currentSuffixes.length === 0) return;
 
-    let timer;
     const currentSuffix = currentSuffixes[loopNum % currentSuffixes.length];
     const fullText = baseText + currentSuffix;
 
     const handleTyping = () => {
-      let nextText;
-      
-      if (isDeleting) {
-        nextText = text.substring(0, text.length - 1);
-      } else {
-        nextText = fullText.substring(0, text.length + 1);
-      }
-      if (isDeleting && nextText.length <= baseText.length) {
-        nextText = baseText;
-      }
-      
-      setText(nextText);
-
-      // Typing speed calculation
-      let nextSpeed = isDeleting ? deletingSpeed : typingSpeed;
-
       // Check if the typing is complete
-      if (!isDeleting && nextText === fullText) {
-        nextSpeed = pauseTime; // Wait time before starting to delete
+      if (!isDeleting && text === fullText) {
         setIsDeleting(true);
+        return;
       } 
+      
       // Check if the deleting is complete
-      else if (isDeleting && nextText === baseText) {
+      if (isDeleting && text === baseText) {
         setIsDeleting(false);
         setLoopNum(loopNum + 1); // Next suffix
-        nextSpeed = 500;
+        return;
       }
 
-      // Next type
-      timer = setTimeout(handleTyping, nextSpeed);
+      const nextText = isDeleting 
+        ? text.substring(0, text.length - 1)
+        : fullText.substring(0, text.length + 1);
+
+      setText(nextText);
     };
 
-    // Start the typing effect
-    timer = setTimeout(handleTyping, isDeleting ? deletingSpeed : typingSpeed);
+    // Typing speed calculation
+    let currentSpeed = isDeleting ? deletingSpeed : typingSpeed;
+    
+    if (!isDeleting && text === fullText) {
+      currentSpeed = pauseTime; // Wait time before starting to delete
+    } else if (isDeleting && text === baseText) {
+      currentSpeed = 500;
+    }
+
+    // Next type
+    const timer = setTimeout(handleTyping, currentSpeed);
     
     // Cleanup function to clear the timer when the component unmounts or dependencies change
     return () => clearTimeout(timer);

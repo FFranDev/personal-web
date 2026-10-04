@@ -1,4 +1,4 @@
-/* Import Inconsolata font */
+/* Inconsolata font */
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap');
 
 /* Global variables */
@@ -9,11 +9,10 @@
   --border-width: 2px;
 }
 
-/*  */
 header {
   width: 100%;
   background-color: var(--bg-color);
-  padding: 5px 20px;
+  padding: 5px 35px;
   box-sizing: border-box;
   border-bottom: 6px double var(--main-color);
 }
@@ -64,7 +63,7 @@ p, h1, h2, h3, h4, h5, h6 {
   border: var(--border-width) solid var(--main-color);
 }
 
-/* Retro button styles */
+/* Retro button style */
 button, .btn {
   font-family: inherit;
   font-size: 1rem;
@@ -86,7 +85,7 @@ button:hover, .btn:hover {
     inset 0 0 0 3px var(--main-color);
 }
 
-/* Remove background from buttons wrapped in links */
+/* Fix remove background from buttons wrapped in links */
 a:has(button):hover, 
 a:has(.btn):hover {
   background-color: transparent;
@@ -157,7 +156,7 @@ label {
   margin-bottom: 4px;
 }
 
-/* Forms & Inputs */
+/* Forms and Inputs */
 input, textarea {
   font-family: inherit;
   font-size: 1rem;
