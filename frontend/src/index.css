@@ -175,6 +175,14 @@ input:focus, textarea:focus {
   box-shadow: inset 0 0 0 2px var(--main-color);
 }
 
+.window-pane {
+  min-height: 200vh;
+  padding-top: 150px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
 /* Mobile responsive adjustments */
 @media (max-width: 600px) {
   main {

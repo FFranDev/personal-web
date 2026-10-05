@@ -62,6 +62,30 @@ function Header() {
     }
   }, [isMobileMenuOpen]);
 
+  // Updates the document title based on the current page and language
+  useEffect(() => {
+    let pageName = "";
+    
+    switch (location.pathname) {
+      case "/":
+        pageName = t("header.home");
+        break;
+      case "/projects":
+        pageName = t("header.projects");
+        break;
+      case "/blog":
+        pageName = t("header.blog");
+        break;
+      case "/contact":
+        pageName = t("header.contact");
+        break;
+      default:
+        pageName = "";
+    }
+    document.title = pageName ? `FranFdez - ${pageName}` : "FranFdez";
+    
+  }, [location.pathname, t]);
+
   const changeLanguage = (lang) => {
     i18n.changeLanguage(lang);
   };

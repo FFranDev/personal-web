@@ -17,5 +17,10 @@
     "projects": "Proyectos",
     "blog": "Blog",
     "contact": "Contacto"
+  },
+  "footer": {
+    "cv": "Descargar CV",
+    "email": "Correo",
+    "rights": "Todos los derechos reservados."
   }
 }

@@ -1,0 +1,84 @@
+/* Footer main container */
+.site-footer {
+  position: relative;
+  width: 100%;
+  background-color: var(--main-color);
+  color: var(--bg-color);
+  border-top: 6px double var(--bg-color); 
+  padding: 30px 35px 20px 35px;
+  box-sizing: border-box;
+  margin-top: auto; 
+  display: flex;
+  justify-content: center;
+}
+
+/* Inverted logo positioning */
+.footer-logo {
+  position: absolute;
+  left: 35px;
+  top: 30px;
+  width: 60px;
+  height: 60px;
+}
+
+.footer-content {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Links layout */
+.footer-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 100px;
+  width: 100%;
+}
+
+.footer-links a {
+  color: var(--bg-color); 
+  text-decoration: none;
+  text-underline-offset: 4px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.footer-links a:hover {
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+  text-decoration: none;
+}
+
+.footer-copyright {
+  font-size: 0.9rem;
+  text-align: center;
+  opacity: 0.8; 
+}
+
+.footer-copyright p {
+  margin: 0;
+}
+
+/* --- Mobile adjustments --- */
+@media (max-width: 1000px) {
+  .site-footer {
+    padding: 20px 15px;
+  }
+
+  .footer-logo {
+    display: none;
+  }
+
+  /* Grid link distribution */
+  .footer-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px; 
+    justify-items: center;
+    text-align: center;
+  }
+}

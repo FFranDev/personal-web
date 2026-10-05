@@ -4,11 +4,9 @@ function Home() {
   const [t] = useTranslation("global");
 
   return (
-    <div className="window-pane" style={{ minHeight: "200vh" }}>
+    <div className="window-pane">
       <h2>{t("header.home")}</h2>
       <p>Sección de Presentación y CV en construcción...</p>
-      
-      <p style={{ marginTop: "150vh" }}>Has llegado al final de la página (TEMP)</p>
     </div>
   );
 }
