@@ -22,5 +22,21 @@
     "cv": "Descargar CV",
     "email": "Correo",
     "rights": "Todos los derechos reservados."
+  },
+  "home": {
+    "greeting": "Hola, soy Francisco Fernández",
+    "bioParagraph1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
+    "bioParagraph2": "Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    "imagePlaceholder": "FOTO / AVATAR",
+    "experienceTitle": "Experiencia y Habilidades",
+    "experienceIntro": "Resumen de mi trayectoria profesional y áreas de especialidad:",
+    "experienceItem1": "Desarrollo de aplicaciones web responsivas utilizando React y CSS moderno.",
+    "experienceItem2": "Gestión de estado y consumo de APIs RESTful en entornos de producción.",
+    "experienceItem3": "Optimización de interfaces de usuario para mejorar la accesibilidad y el rendimiento.",
+    "stackTitle": "Herramientas y Tecnologías",
+    
+    "level_expert": "Experto",
+    "level_advanced": "Avanzado",
+    "level_competent": "Competente"
   }
 }

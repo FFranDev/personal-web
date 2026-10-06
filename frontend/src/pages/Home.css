@@ -1,0 +1,107 @@
+/* Wrapper to limit width and center content */
+.home-content {
+  max-width: 850px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* Specific styling for section titles */
+.home-content h2 {
+  border-bottom: var(--border-width) solid var(--main-color);
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+/* Profile Section Layout */
+.profile-panel {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.profile-text {
+  flex: 1;
+}
+
+.profile-image {
+  width: 200px;
+  height: 200px;
+}
+
+/* Experience Section Layout */
+.experience-list {
+  list-style-type: square;
+  padding-left: 20px;
+  line-height: 1.6;
+}
+
+/* Stack Section Layout & Level Indicators */
+.stack-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tech-tag {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: var(--border-width) solid var(--main-color);
+  padding: 6px 12px;
+  transition: all 0.2s ease-in-out;
+  cursor: help;
+}
+
+.tech-name {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.tech-level {
+  display: flex;
+  gap: 4px;
+}
+
+.level-block {
+  width: 10px;
+  height: 14px;
+  border: 1px solid var(--main-color);
+  box-sizing: border-box;
+}
+
+.level-block.filled {
+  background-color: var(--main-color);
+}
+
+.level-block.empty {
+  background-color: transparent;
+}
+
+.tech-tag:hover {
+  background-color: var(--main-color);
+  color: var(--bg-color);
+}
+
+.tech-tag:hover .level-block {
+  border-color: var(--bg-color);
+}
+
+.tech-tag:hover .level-block.filled {
+  background-color: var(--bg-color);
+}
+
+/* --- Mobile adjustments --- */
+@media (max-width: 1000px) {
+  .profile-panel {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 24px;
+  }
+}

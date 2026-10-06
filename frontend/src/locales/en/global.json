@@ -23,5 +23,21 @@
     "cv": "Download CV",
     "email": "Email",
     "rights": "All rights reserved."
+  },
+  "home": {
+    "greeting": "Hi, I'm Francisco Fernández",
+    "bioParagraph1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
+    "bioParagraph2": "Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    "imagePlaceholder": "PHOTO / AVATAR",
+    "experienceTitle": "Experience & Skills",
+    "experienceIntro": "A brief overview of my professional background and key strengths:",
+    "experienceItem1": "Developing responsive web applications using React and modern CSS.",
+    "experienceItem2": "State management and consumption of RESTful APIs in production environments.",
+    "experienceItem3": "Optimizing user interfaces to improve accessibility and overall performance.",
+    "stackTitle": "Tech Stack & Tools",
+
+    "level_expert": "Expert",
+    "level_advanced": "Advanced",
+    "level_competent": "Competent"
   }
 }
