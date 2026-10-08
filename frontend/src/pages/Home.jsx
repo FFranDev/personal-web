@@ -37,6 +37,7 @@ function Home() {
             <h2>{t("home.greeting")}</h2>
             <p>{t("home.bioParagraph1")}</p>
             <p>{t("home.bioParagraph2")}</p>
+            <p>{t("home.bioParagraph3")}</p>
           </div>
           <div className="profile-image-container">
             <div className="placeholder-image">

@@ -32,6 +32,7 @@
 .profile-image {
   width: 200px;
   height: 200px;
+  margin-top: 54px;
 }
 
 /* Experience Section Layout */
@@ -103,5 +104,9 @@
     flex-direction: column-reverse;
     align-items: center;
     gap: 24px;
+  }
+
+  .profile-image {
+    margin-top: 0px;
   }
 }
