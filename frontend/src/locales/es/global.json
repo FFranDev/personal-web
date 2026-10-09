@@ -25,18 +25,28 @@
   },
   "home": {
     "greeting": "¡Bienvenido a mi portfolio!",
-    "bioParagraph1": "¡Hola! Soy Fran, recién graduado en Ingeniería Informática por la Universidad de León (ULE). Tras finalizar mi etapa de estudiante y defender mi Trabajo de Fin de Grado el pasado mes de julio, busco mi primer rol a tiempo completo como desarrollador de software Full-Stack. Mi objetivo es integrarme en un equipo donde pueda aportar valor y seguir creciendo profesionalmente, ya sea creando software bajo demanda para terceros o impulsando el desarrollo de un producto interno.",
+    "bioParagraph1": "¡Hola! Soy Fran, recién graduado en Ingeniería Informática por la Universidad de León (ULE). Tras finalizar mi etapa de estudiante y defender mi Trabajo de Fin de Grado, busco mi primer rol a tiempo completo como desarrollador de software Full-Stack. Mi objetivo es integrarme en un equipo donde pueda aportar valor y seguir creciendo profesionalmente, ya sea creando software bajo demanda para terceros o impulsando el desarrollo de un producto interno.",
     "bioParagraph2": "Para conocerme más en detalle, te invito a explorar mi portfolio. En la sección de proyectos y en mi blog personal, donde documento mis avances, podrás echar un vistazo a los desarrollos en los que trabajo habitualmente. En ellos pongo en práctica lo aprendido y exploro nuevas herramientas para seguir ampliando mis habilidades técnicas.",
     "bioParagraph3": "En caso de que mi perfil encaje con lo que estáis buscando, me encantaría que hablásemos. Puedes encontrar mi correo electrónico, teléfono y acceso a mi LinkedIn en la sección de contacto.",
-    "experienceTitle": "Experiencia y Habilidades",
-    "experienceIntro": "Resumen de mi trayectoria profesional y áreas de especialidad:",
-    "experienceItem1": "Desarrollo de aplicaciones web responsivas utilizando React y CSS moderno.",
-    "experienceItem2": "Gestión de estado y consumo de APIs RESTful en entornos de producción.",
-    "experienceItem3": "Optimización de interfaces de usuario para mejorar la accesibilidad y el rendimiento.",
+
+    "experienceTitle": "Habilidades y Experiencia",
+    "experienceIntroText": "Mi perfil profesional destaca por una alta capacidad de adaptación y una mentalidad orientada al aprendizaje continuo. A través de la coordinación de equipos, he desarrollado la agilidad para resolver problemas bajo presión, aportando valor analítico y manteniendo una comunicación fluida con clientes y compañeros, tanto en español como en inglés.","exp_xeridia_role": "Desarrollador Atlassian",
+    "exp_xeridia_company": "Xeridia",
+    "exp_xeridia_date": "Septiembre 2025 - Enero 2026",
+    "exp_xeridia_desc": "Desarrollo de un plugin de Jira para la gestión de usuarios. Coordinación de un equipo de 4 personas asumiendo gran parte de las decisiones técnicas y manteniendo una comunicación constante con clientes y equipo.",
+    "exp_restauracion_company": "Cadena de Restauración",
+    "exp_restauracion_role": "Personal de equipo y atención al cliente",
+    "exp_restauracion_date": "Septiembre 2024 - Abril 2025",
+    "exp_restauracion_desc": "Mantenimiento de la eficiencia operativa en entornos de alta demanda. Resolución de incidencias de forma ágil y rápida adaptación a protocolos y normas estrictas de seguridad mediante coordinación y multitasking.",
+    "exp_estalmat_company": "Programa Estalmat",
+    "exp_estalmat_role": "Selección y Desarrollo de Talento Matemático",
+    "exp_estalmat_date": "Actividad Destacada",
+    "exp_estalmat_desc": "Participación en un programa intensivo de detección y desarrollo del talento matemático. Adquisición de habilidades avanzadas de lógica, resolución de problemas complejos y pensamiento abstracto.",
+
     "stackTitle": "Herramientas y Tecnologías",
-    
-    "level_expert": "Experto",
-    "level_advanced": "Avanzado",
-    "level_competent": "Competente"
+    "level_expert": "Avanzado",
+    "level_advanced": "Intermedio",
+    "level_competent": "Básico",
+    "tech_agentic_desc": "Integración de LLMs y automatización inteligente"
   }
 }

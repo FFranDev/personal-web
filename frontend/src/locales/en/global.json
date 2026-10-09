@@ -26,18 +26,29 @@
   },
   "home": {
     "greeting": "Welcome to my portfolio!",
-    "bioParagraph1": "Hello! I'm Fran, a recent Computer Engineering graduate from the University of León (ULE). Having finished my studies and defended my Final Degree Project last July, I am looking for my first full-time role as a Full-Stack software developer. My goal is to join a team where I can add value and continue growing professionally, whether that's creating custom software for clients or driving the development of an in-house product.",
+    "bioParagraph1": "Hello! I'm Fran, a recent Computer Engineering graduate from the University of León (ULE). Having finished my studies and defended my Final Degree Project, I am looking for my first full-time role as a Full-Stack software developer. My goal is to join a team where I can add value and continue growing professionally, whether that's creating custom software for clients or driving the development of an in-house product.",
     "bioParagraph2": "To get to know me better, I invite you to explore my portfolio. In the projects section and on my personal blog, where I document my progress, you can take a look at the personal developments I regularly work on. In them, I put into practice what I've learned and explore new tools to continue expanding my technical skills.",
     "bioParagraph3": "If my profile fits what you are looking for, I would love to chat. You can find my email, phone number, and LinkedIn profile in the Contact section.",
-    "experienceTitle": "Experience & Skills",
-    "experienceIntro": "A brief overview of my professional background and key strengths:",
-    "experienceItem1": "Developing responsive web applications using React and modern CSS.",
-    "experienceItem2": "State management and consumption of RESTful APIs in production environments.",
-    "experienceItem3": "Optimizing user interfaces to improve accessibility and overall performance.",
+    
+    "experienceTitle": "Skills and Experience",
+    "experienceIntroText": "My professional profile stands out for high adaptability and a mindset geared towards continuous learning. Through team coordination, I have developed the agility to solve problems under pressure, providing analytical value and maintaining smooth communication with clients and colleagues in both English and Spanish.",
+    "exp_xeridia_company": "Xeridia",
+    "exp_xeridia_role": "Atlassian Developer",
+    "exp_xeridia_date": "September 2025 - January 2026",
+    "exp_xeridia_desc": "Developed a Jira plugin for user management. Coordinated a 4-person team, taking ownership of key technical decisions and maintaining constant communication with clients and stakeholders.",
+    "exp_restauracion_company": "Restaurant Chain",
+    "exp_restauracion_role": "Team Member & Customer Service",
+    "exp_restauracion_date": "September 2024 - April 2025",
+    "exp_restauracion_desc": "Maintained operational efficiency in high-demand environments. Agile incident resolution and quick adaptation to strict safety protocols and standards through coordination and multitasking.",
+    "exp_estalmat_company": "ESTALMAT Program",
+    "exp_estalmat_role": "Mathematical Talent Selection and Development",
+    "exp_estalmat_date": "Featured Activity",
+    "exp_estalmat_desc": "Participation in an intensive program for the detection and development of mathematical talent. Acquired advanced skills in logic, complex problem solving, and abstract thinking.",
+    
     "stackTitle": "Tech Stack & Tools",
-
-    "level_expert": "Expert",
-    "level_advanced": "Advanced",
-    "level_competent": "Competent"
+    "level_expert": "Advanced",
+    "level_advanced": "Intermediate",
+    "level_competent": "Basic",
+    "tech_agentic_desc": "LLM integration and intelligent automation"
   }
 }

@@ -35,34 +35,126 @@
   margin-top: 54px;
 }
 
-/* Experience Section Layout */
-.experience-list {
-  list-style-type: square;
-  padding-left: 20px;
+/* Experience Section Layout & Cards */
+.experience-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.experience-card {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  border: var(--border-width) solid var(--main-color);
+  box-shadow: inset 4px 4px 0px 0px rgba(0, 0, 0, 0.08);
+  background-color: rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease-in-out;
+}
+
+.exp-logo-container {
+  flex-shrink: 0;
+  width: 60px;
+}
+
+.exp-logo {
+  width: 100%;
+  height: 60px;
+  margin-bottom: 0; 
+}
+
+.exp-details {
+  flex: 1;
+}
+
+.exp-role {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+}
+
+.exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--main-color);
+  padding-bottom: 4px;
+}
+
+.exp-desc {
+  margin: 0;
+  font-size: 0.95rem;
   line-height: 1.6;
 }
 
-/* Stack Section Layout & Level Indicators */
-.stack-tags {
+/* Mini tags for experience cards */
+.exp-tech-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.mini-tag {
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: var(--border-width) solid var(--main-color);
+  background-color: transparent;
+  color: var(--main-color);
+  transition: all 0.2s ease-in-out;
+  cursor: default;
+}
+
+/* Stack Section Layout and Level Indicators */
+.stack-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.level-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.level-title {
+  font-size: 0.95rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--main-color);
+  border-bottom: 1px solid var(--main-color);
+  padding-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .tech-tag {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
+  gap: 16px;
   border: var(--border-width) solid var(--main-color);
-  padding: 6px 12px;
+  padding: 10px 16px;
   transition: all 0.2s ease-in-out;
-  cursor: help;
+  cursor: default;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.tech-tag[data-description] {
+  cursor: help; 
 }
 
 .tech-name {
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 0.9rem;
+  font-size: 1.05rem;
 }
 
 .tech-level {
@@ -71,31 +163,48 @@
 }
 
 .level-block {
-  width: 10px;
-  height: 14px;
+  width: 12px;
+  height: 16px;
   border: 1px solid var(--main-color);
   box-sizing: border-box;
 }
 
-.level-block.filled {
-  background-color: var(--main-color);
-}
+.level-block.filled { background-color: var(--main-color); }
 
-.level-block.empty {
-  background-color: transparent;
-}
+.level-block.empty { background-color: transparent; }
 
 .tech-tag:hover {
   background-color: var(--main-color);
   color: var(--bg-color);
 }
+.tech-tag:hover .level-block { border-color: var(--bg-color); }
+.tech-tag:hover .level-block.filled { background-color: var(--bg-color); }
 
-.tech-tag:hover .level-block {
-  border-color: var(--bg-color);
+/* Custom CSS Tooltip only for elements with data-description */
+.tech-tag[data-description]::after {
+  content: attr(data-description);
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--bg-color);
+  color: var(--main-color);
+  border: var(--border-width) solid var(--main-color);
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 10;
+  font-weight: normal;
+  text-transform: none;
 }
 
-.tech-tag:hover .level-block.filled {
-  background-color: var(--bg-color);
+.tech-tag[data-description]:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-4px);
 }
 
 /* --- Mobile adjustments --- */
@@ -108,5 +217,35 @@
 
   .profile-image {
     margin-top: 0px;
+  }
+
+  .experience-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .exp-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .stack-columns {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  
+  .level-group {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .level-title {
+    width: 100%;
+  }
+  
+  .tech-tag {
+    width: max-content; 
   }
 }
