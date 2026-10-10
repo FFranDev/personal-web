@@ -48,5 +48,18 @@
     "level_advanced": "Intermedio",
     "level_competent": "Básico",
     "tech_agentic_desc": "Integración de LLMs y automatización inteligente"
+  },
+  "projects": {
+    "introText": "Una selección de proyectos personales donde exploro nuevas herramientas, aplico arquitecturas de software y resuelvo problemas técnicos reales.",
+    "showGallery": "Galería de imágenes",
+    "hideGallery": "Ocultar galería",
+    "prev": "Ant",
+    "next": "Sig",
+    "cgruleengine_title": "CGRuleEngine (TFG)",
+    "cgruleengine_desc": "Motor de reglas implementado para la validación y ejecución de lógicas de negocio complejas, desarrollado como Trabajo de Fin de Grado. Permite desacoplar las reglas de negocio del código principal.",
+    "godotcstoolbox_title": "Godot CS Toolbox",
+    "godotcstoolbox_desc": "Colección de utilidades y scripts en C# para el motor Godot. Diseñado para acelerar el desarrollo de mecánicas comunes y mejorar la arquitectura de proyectos de juegos.",
+    "personalweb_title": "Portfolio Personal",
+    "personalweb_desc": "Desarrollo de este sitio web interactivo con estilo retro. Implementado con React, css nativo e internacionalización, diseñado para ser completamente responsive y extensible."
   }
 }
