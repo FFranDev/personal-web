@@ -50,6 +50,7 @@
     "tech_agentic_desc": "Integración de LLMs y automatización inteligente"
   },
   "projects": {
+    "filterAll": "Todos",
     "introText": "Una selección de proyectos personales donde exploro nuevas herramientas, aplico arquitecturas de software y resuelvo problemas técnicos reales.",
     "showGallery": "Galería de imágenes",
     "hideGallery": "Ocultar galería",

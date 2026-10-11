@@ -102,12 +102,12 @@ function Home() {
 
   return (
     <div className="window-pane">
-      <div className="home-content">
+      <div className="page-container">
         
         {/* Profile Panel */}
         <section className="panel profile-panel">
           <div className="profile-text">
-            <h2>{t("home.greeting")}</h2>
+            <h2 className="section-title">{t("home.greeting")}</h2>
             <p>{t("home.bioParagraph1")}</p>
             <p>{t("home.bioParagraph2")}</p>
             <p>{t("home.bioParagraph3")}</p>
@@ -121,7 +121,7 @@ function Home() {
 
         {/* Experience Panel */}
         <section className="panel experience-panel">
-          <h2>{t("home.experienceTitle")}</h2>
+          <h2 className="section-title">{t("home.experienceTitle")}</h2>
           <p>{t("home.experienceIntroText")}</p>
 
           <div className="experience-list-container">
@@ -141,7 +141,7 @@ function Home() {
 
         {/* Stack Panel */}
         <section className="panel stack-panel">
-          <h2>{t("home.stackTitle")}</h2>
+          <h2 className="section-title">{t("home.stackTitle")}</h2>
           <div className="stack-columns">
             {stackLevels.map((lvl) => (
               <div className="level-group" key={lvl.level}>

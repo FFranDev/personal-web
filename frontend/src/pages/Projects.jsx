@@ -4,7 +4,7 @@ import './Projects.css';
 
 import presentationImage from '../assets/presentation_pic.png';
 
-// Dummy data for projects
+// Projects data structure
 const projectsData = [
   {
     id: "cgruleengine",
@@ -16,7 +16,7 @@ const projectsData = [
   {
     id: "godotcstoolbox",
     githubUrl: "https://github.com/FFranDev/godot-cs-toolbox",
-    tags: ["C#", "Godot"],
+    tags: ["C#", "Godot", "Test", "Hallo"],
     mainImage: presentationImage,
     galleryImages: [presentationImage, presentationImage]
   },
@@ -90,7 +90,7 @@ function ProjectCard({ id, githubUrl, mainImage, galleryImages, tags }) {
           
           {isGalleryOpen && (
             <div className="gallery-content">
-              <div className="gallery-viewport" ref={galleryRef}>
+              <div className="gallery-viewport no-scrollbar" ref={galleryRef}>
                 <div 
                   className="gallery-track" 
                   style={{ 
@@ -135,14 +135,21 @@ function ProjectCard({ id, githubUrl, mainImage, galleryImages, tags }) {
 function Projects() {
   const [t] = useTranslation("global");
   const [activeFilter, setActiveFilter] = useState("Todos");
+  const scrollContainerRef = useRef(null);
+  
+  // Track scroll position to conditionally show indicators/buttons
+  const [scrollState, setScrollState] = useState({
+    canScrollLeft: false,
+    canScrollRight: true
+  });
 
-  // Dynamically extract all unique tags from data
-  const allTags = useMemo(() => {
+  // Dynamically extract all unique tags from data (excluding 'Todos')
+  const dynamicTags = useMemo(() => {
     const tags = new Set();
     projectsData.forEach(project => {
       project.tags.forEach(tag => tags.add(tag));
     });
-    return ["Todos", ...Array.from(tags)];
+    return Array.from(tags);
   }, []);
 
   const filteredProjects = useMemo(() => {
@@ -150,25 +157,96 @@ function Projects() {
     return projectsData.filter(project => project.tags.includes(activeFilter));
   }, [activeFilter]);
 
+  // Checks the scroll position of the container
+  const checkScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      // 1px tolerance to avoid floating point rounding issues
+      setScrollState({
+        canScrollLeft: scrollLeft > 1,
+        canScrollRight: Math.ceil(scrollLeft + clientWidth) < scrollWidth - 1
+      });
+    }
+  };
+
+  // Check scroll initially and on window resize
+  useEffect(() => {
+    checkScroll();
+    window.addEventListener('resize', checkScroll);
+    return () => window.removeEventListener('resize', checkScroll);
+  }, [dynamicTags]);
+
+  const scrollFilters = (direction) => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 200; // Scroll distance in pixels
+      scrollContainerRef.current.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+      });
+      // Small timeout to let smooth scroll finish before re-checking
+      setTimeout(checkScroll, 350); 
+    }
+  };
+
   return (
     <div className="window-pane">
-      <div className="projects-content">
+      <div className="page-container">
         
         {/* Intro and Filters Panel */}
         <section className="panel projects-intro">
-          <h2>{t("header.projects")}</h2>
+          <h2 className="section-title">{t("header.projects")}</h2>
           <p>{t("projects.introText")}</p>
 
-          <div className="filters-container">
-            {allTags.map(tag => (
+          <div className="filters-wrapper">
+            <div className="filters-main-row">
               <button
-                key={tag}
-                className={`filter-tag ${activeFilter === tag ? 'active' : ''}`}
-                onClick={() => setActiveFilter(tag)}
+                className={`filter-tag-all ${activeFilter === "Todos" ? 'active' : ''}`}
+                onClick={() => setActiveFilter("Todos")}
               >
-                {tag}
+                {t("projects.filterAll")}
               </button>
-            ))}
+
+              <div className="filters-scroll-window">
+                {scrollState.canScrollLeft && <div className="mobile-scroll-indicator left">«</div>}
+                
+                <div 
+                  className="filters-scroll-track no-scrollbar" 
+                  ref={scrollContainerRef}
+                  onScroll={checkScroll}
+                >
+                  {dynamicTags.map(tag => (
+                    <button
+                      key={tag}
+                      className={`filter-tag ${activeFilter === tag ? 'active' : ''}`}
+                      onClick={() => setActiveFilter(tag)}
+                    >
+                      {tag}
+                    </button>
+                  ))}
+                </div>
+                {scrollState.canScrollRight && <div className="mobile-scroll-indicator right">»</div>}
+              </div>
+            </div>
+
+            <div className="filters-desktop-controls">
+              <button 
+                className="btn filter-scroll-btn" 
+                onClick={() => scrollFilters(-1)}
+                disabled={!scrollState.canScrollLeft}
+                aria-label="Scroll left"
+              >
+                «
+              </button>
+              <button 
+                className="btn filter-scroll-btn" 
+                onClick={() => scrollFilters(1)}
+                disabled={!scrollState.canScrollRight}
+                aria-label="Scroll right"
+              >
+                »
+              </button>
+            </div>
+
           </div>
         </section>
 

@@ -1,7 +1,5 @@
-/* Inconsolata font */
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap');
 
-/* Global variables */
 :root {
   --bg-color: #f4f4f0;
   --main-color: #000000;
@@ -17,12 +15,6 @@ header {
   border-bottom: 6px double var(--main-color);
 }
 
-footer {
-  border-bottom: none;
-  border-top: var(--border-width) solid var(--main-color);
-}
-
-/* Base reset and typography */
 html, body {
   margin: 0;
   padding: 0;
@@ -34,25 +26,21 @@ html, body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.2'/%3E%3C/svg%3E");
 }
 
-/* Firefox scrollbar support */
 html {
   scrollbar-width: auto;
   scrollbar-color: var(--main-color) var(--bg-color);
 }
 
-/* Global text spacing */
 p, h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
   margin-bottom: 16px;
 }
 
-/* Text Selection */
 ::selection {
   background-color: var(--accent-color);
   color: var(--bg-color);
 }
 
-/* Custom Retro Scrollbar */
 ::-webkit-scrollbar {
   width: 16px;
   background: var(--bg-color);
@@ -63,7 +51,42 @@ p, h1, h2, h3, h4, h5, h6 {
   border: var(--border-width) solid var(--main-color);
 }
 
-/* Retro button style */
+/* UI Utilities */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.page-container {
+  max-width: 850px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.section-title {
+  border-bottom: var(--border-width) solid var(--main-color);
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+.mini-tag {
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: var(--border-width) solid var(--main-color);
+  background-color: transparent;
+  color: var(--main-color);
+  transition: all 0.2s ease-in-out;
+  cursor: default;
+}
+
 button, .btn {
   font-family: inherit;
   font-size: 1rem;
@@ -78,20 +101,17 @@ button, .btn {
   transition: none;
 }
 
-/* Hover: Tighter double inner border */
 button:hover, .btn:hover {
   box-shadow: 
     inset 0 0 0 1px var(--bg-color), 
     inset 0 0 0 3px var(--main-color);
 }
 
-/* Fix remove background from buttons wrapped in links */
 a:has(button):hover, 
 a:has(.btn):hover {
   background-color: transparent;
 }
 
-/* Active and Toggled states */
 button:active, .btn:active, 
 button.active, .btn.active {
   background-color: var(--main-color);
@@ -99,7 +119,6 @@ button.active, .btn.active {
   box-shadow: none;
 }
 
-/* Main layout wrapper */
 main {
   max-width: 800px;
   margin: 0 auto;
@@ -107,12 +126,10 @@ main {
   box-sizing: border-box;
 }
 
-/* Sections spacing */
 section {
   margin-bottom: 32px;
 }
 
-/* Retro card/panel */
 article, .panel {
   background-color: var(--bg-color);
   border: var(--border-width) solid var(--main-color);
@@ -121,7 +138,6 @@ article, .panel {
   box-shadow: 4px 4px 0px 0px var(--main-color);
 }
 
-/* Square responsive images */
 img {
   max-width: 100%;
   height: auto;
@@ -137,7 +153,6 @@ img.retro-filter {
   filter: grayscale(100%);
 }
 
-/* Links */
 a {
   color: var(--main-color);
   text-decoration: underline;
@@ -150,13 +165,11 @@ a:hover {
   text-decoration: none;
 }
 
-/* Form labels */
 label {
   display: block;
   margin-bottom: 4px;
 }
 
-/* Forms and Inputs */
 input, textarea {
   font-family: inherit;
   font-size: 1rem;
@@ -183,7 +196,6 @@ input:focus, textarea:focus {
   flex-direction: column;
 }
 
-/* Mobile responsive adjustments */
 @media (max-width: 600px) {
   main {
     padding: 10px;
