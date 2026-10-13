@@ -9,7 +9,7 @@ const projectsData = [
   {
     id: "cgruleengine",
     githubUrl: "https://github.com/ffernu/CGRuleEngine_TFG",
-    tags: ["Java", "Spring Boot", "JUnit"],
+    tags: ["Java", "Spring Boot", "JUnit", "Java", "Spring Boot", "JUnit"],
     mainImage: presentationImage,
     galleryImages: [presentationImage, presentationImage, presentationImage]
   },
@@ -34,14 +34,7 @@ function ProjectCard({ id, githubUrl, mainImage, galleryImages, tags }) {
   const [t] = useTranslation("global");
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1000);
-  const galleryRef = useRef(null);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 1000);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const touchStartX = useRef(null);
 
   const toggleGallery = () => {
     setIsGalleryOpen(!isGalleryOpen);
@@ -54,21 +47,35 @@ function ProjectCard({ id, githubUrl, mainImage, galleryImages, tags }) {
     }
   };
 
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    
+    const touchEndX = e.changedTouches[0].clientX;
+    const diffX = touchStartX.current - touchEndX;
+    const swipeThreshold = 50; // Minimum swipe distance in px
+
+    if (diffX > swipeThreshold) {
+      moveGallery(1);
+    } else if (diffX < -swipeThreshold) {
+      moveGallery(-1);
+    }
+
+    touchStartX.current = null;
+  };
+
   return (
     <div className="panel project-card">
       <div className="project-top">
-        <div className="project-info">
-          <h3 className="project-title">
-            <a href={githubUrl} target="_blank" rel="noopener noreferrer">
-              {t(`projects.${id}_title`)} ↗
-            </a>
-          </h3>
-          <div className="mini-tags">
-            {tags.map((tag, index) => (
-              <span key={index} className="mini-tag">{tag}</span>
-            ))}
-          </div>
-        </div>
+        <h3 className="project-title">
+          <a href={githubUrl} target="_blank" rel="noopener noreferrer">
+            {t(`projects.${id}_title`)} ↗
+          </a>
+        </h3>
+        
         <div className="project-image-wrapper">
           <img 
             src={mainImage} 
@@ -76,9 +83,13 @@ function ProjectCard({ id, githubUrl, mainImage, galleryImages, tags }) {
             className="main-image" 
           />
         </div>
-      </div>
-      
-      <div className="project-body">
+
+        <div className="mini-tags">
+          {tags.map((tag, index) => (
+            <span key={index} className="mini-tag">{tag}</span>
+          ))}
+        </div>
+
         <p className="project-desc">{t(`projects.${id}_desc`)}</p>
       </div>
 
@@ -90,39 +101,38 @@ function ProjectCard({ id, githubUrl, mainImage, galleryImages, tags }) {
           
           {isGalleryOpen && (
             <div className="gallery-content">
-              <div className="gallery-viewport no-scrollbar" ref={galleryRef}>
-                <div 
-                  className="gallery-track" 
-                  style={{ 
-                    transform: isMobile ? 'none' : `translateX(-${currentImageIndex * 100}%)` 
-                  }}
-                >
-                  {galleryImages.map((img, index) => (
-                    <img key={index} src={img} alt={`Gallery capture ${index + 1}`} />
-                  ))}
-                </div>
+              <div 
+                className="gallery-viewport"
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+              >
+                <img 
+                  src={galleryImages[currentImageIndex]} 
+                  alt={`Gallery capture ${currentImageIndex + 1}`} 
+                  className="gallery-image"
+                />
               </div>
               
-              {!isMobile && (
-                <div className="gallery-controls">
-                  <button 
-                    className="btn" 
-                    onClick={() => moveGallery(-1)}
-                    disabled={currentImageIndex === 0}
-                  >
-                    &lt; {t("projects.prev")}
-                  </button>
-                  <button 
-                    className="btn" 
-                    onClick={() => moveGallery(1)}
-                    disabled={currentImageIndex === galleryImages.length - 1}
-                  >
-                    {t("projects.next")} &gt;
-                  </button>
-                </div>
-              )}
+              <div className="gallery-controls">
+                <button 
+                  className="gallery-scroll-btn" 
+                  onClick={() => moveGallery(-1)}
+                  disabled={currentImageIndex === 0}
+                >
+                  «
+                </button>
+                <button 
+                  className="gallery-scroll-btn" 
+                  onClick={() => moveGallery(1)}
+                  disabled={currentImageIndex === galleryImages.length - 1}
+                >
+                  »
+                </button>
+              </div>
               
-              {isMobile && <div className="gallery-counter"></div>}
+              <div className="gallery-counter">
+                {"« "} {t("projects.gallerySwipeMobile")} {" »"}
+              </div>
             </div>
           )}
         </div>
@@ -194,8 +204,9 @@ function Projects() {
         
         {/* Intro and Filters Panel */}
         <section className="panel projects-intro">
-          <h2 className="section-title">{t("header.projects")}</h2>
-          <p>{t("projects.introText")}</p>
+          <h2 className="section-title">{t("projects.greeting")}</h2>
+          <p>{t("projects.introText1")}</p>
+          <p>{t("projects.introText2")}</p>
 
           <div className="filters-wrapper">
             <div className="filters-main-row">

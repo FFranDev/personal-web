@@ -50,16 +50,23 @@
     "tech_agentic_desc": "Integración de LLMs y automatización inteligente"
   },
   "projects": {
+    "greeting": "¡Explora mis proyectos personales!",
+    "introText1": "Bienvenido a la sección de mis proyectos personales. Aquí podrás explorar los distintos trabajos en los que invierto mi tiempo, los cuales son el motor principal que me ayuda a mantenerme en constante aprendizaje y evolución. Encontrarás desarrollos de diversos tipos, y siempre tengo nuevas ideas en mente preparadas para cobrar vida en el futuro.",
+    "introText2": "Si buscas algo específico, puedes utilizar el filtro de la página para explorar los proyectos en función de las tecnologías y herramientas que he empleado en cada uno de ellos.",
     "filterAll": "Todos",
-    "introText": "Una selección de proyectos personales donde exploro nuevas herramientas, aplico arquitecturas de software y resuelvo problemas técnicos reales.",
+
     "showGallery": "Galería de imágenes",
-    "hideGallery": "Ocultar galería",
-    "prev": "Ant",
-    "next": "Sig",
+    "hideGallery": "Ocultar galería de imágenes",
+    "prev": "<<",
+    "next": ">>",
+    "gallerySwipeMobile": "Desliza para ver más imágenes",
+
     "cgruleengine_title": "CGRuleEngine (TFG)",
-    "cgruleengine_desc": "Motor de reglas implementado para la validación y ejecución de lógicas de negocio complejas, desarrollado como Trabajo de Fin de Grado. Permite desacoplar las reglas de negocio del código principal.",
+    "cgruleengine_desc": "Motor de reglas implementado para la validación y ejecución de lógicas de negocio complejas, a a a a a a a a a a a a a desarrollado como Trabajo de Fin de Grado. Permite desacoplar las reglas de negocio del código principal. Motor de reglas implementado para la validación y ejecución de lógicas de negocio complejas, desarrollado como Trabajo de Fin de Grado. Permite desacoplar las reglas de negocio del código principal.",
+    
     "godotcstoolbox_title": "Godot CS Toolbox",
     "godotcstoolbox_desc": "Colección de utilidades y scripts en C# para el motor Godot. Diseñado para acelerar el desarrollo de mecánicas comunes y mejorar la arquitectura de proyectos de juegos.",
+    
     "personalweb_title": "Portfolio Personal",
     "personalweb_desc": "Desarrollo de este sitio web interactivo con estilo retro. Implementado con React, css nativo e internacionalización, diseñado para ser completamente responsive y extensible."
   }
