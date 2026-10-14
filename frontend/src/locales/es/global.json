@@ -38,7 +38,7 @@
     "exp_restauracion_role": "Personal de equipo y atención al cliente",
     "exp_restauracion_date": "Septiembre 2024 - Abril 2025",
     "exp_restauracion_desc": "Mantenimiento de la eficiencia operativa en entornos de alta demanda. Resolución de incidencias de forma ágil y rápida adaptación a protocolos y normas estrictas de seguridad mediante coordinación y multitasking.",
-    "exp_estalmat_company": "Programa Estalmat",
+    "exp_estalmat_company": "Programa Estalmat", 
     "exp_estalmat_role": "Selección y Desarrollo de Talento Matemático",
     "exp_estalmat_date": "Actividad Destacada",
     "exp_estalmat_desc": "Participación en un programa intensivo de detección y desarrollo del talento matemático. Adquisición de habilidades avanzadas de lógica, resolución de problemas complejos y pensamiento abstracto.",
@@ -57,17 +57,15 @@
 
     "showGallery": "Galería de imágenes",
     "hideGallery": "Ocultar galería de imágenes",
-    "prev": "<<",
-    "next": ">>",
     "gallerySwipeMobile": "Desliza para ver más imágenes",
 
     "cgruleengine_title": "CGRuleEngine (TFG)",
-    "cgruleengine_desc": "Motor de reglas implementado para la validación y ejecución de lógicas de negocio complejas, a a a a a a a a a a a a a desarrollado como Trabajo de Fin de Grado. Permite desacoplar las reglas de negocio del código principal. Motor de reglas implementado para la validación y ejecución de lógicas de negocio complejas, desarrollado como Trabajo de Fin de Grado. Permite desacoplar las reglas de negocio del código principal.",
+    "cgruleengine_desc": "Mi TFG (evaluado con un 9.9 y habiendo sido candidato a matrícula de honor) consistió en el desarrollo de CGRuleEngine, una herramienta de software programada en C# (.NET Standard 2.1) creada para facilitar y agilizar la programación de videojuegos del género de cartas aislando completamente la lógica de negocio de la capa gráfica. Se trata de un motor de reglas modular, sólido, escalable y agnóstico, capaz de gestionar de forma automática toda la infraestructura técnica de una partida, incluyendo el control de turnos, jugadores, zonas y la resolución de efectos mediante una estructura de pila.\nSi quieres conocer más acerca de mi trabajo, te invito a echar un ojo a la memoria del proyecto. Lo puedes encontrar en el repositorio de GitHub, junto con el código fuente y su documentación completa.",
     
     "godotcstoolbox_title": "Godot CS Toolbox",
-    "godotcstoolbox_desc": "Colección de utilidades y scripts en C# para el motor Godot. Diseñado para acelerar el desarrollo de mecánicas comunes y mejorar la arquitectura de proyectos de juegos.",
+    "godotcstoolbox_desc": "Godot CS Toolbox consiste en una colección de utilidades y scripts para el motor Godot en constante evolución. Más que un producto comercial o cerrado, este proyecto funciona como un espacio de experimentación. Está diseñada para acelerar la implementación de prototipos y mecánicas comunes, resolver problemas habituales y ayudar a establecer una arquitectura limpia, reutilizable y mucho más sólida para cualquier proyecto de juego.\nEste proyecto personal nació puramente por diversión y como la excusa perfecta para adentrarme en el mundo del desarrollo de videojuegos, a la vez que sigo mejorando y perfeccionando mi conocimiento con el lenguaje C#.",
     
     "personalweb_title": "Portfolio Personal",
-    "personalweb_desc": "Desarrollo de este sitio web interactivo con estilo retro. Implementado con React, css nativo e internacionalización, diseñado para ser completamente responsive y extensible."
+    "personalweb_desc": "La página web donde estás leyendo esto es también un proyecto personal, concebido tanto como portfolio profesional como plataforma para compartir contenido. La plataforma está estructurada en cuatro secciones principales: Inicio, Proyectos, Blog y Contacto. A nivel técnico, el proyecto hibrida la rapidez y eficiencia de una web puramente estática con la versatilidad de una arquitectura completa de frontend y backend para la gestión del contenido dinámico. Todo el diseño visual ha sido maquetado desde cero utilizando CSS propio, prestando especial atención a la adaptabilidad para garantizar un soporte total y una experiencia fluida en formato móvil."
   }
 }

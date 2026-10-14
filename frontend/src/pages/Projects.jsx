@@ -4,28 +4,38 @@ import './Projects.css';
 
 import presentationImage from '../assets/presentation_pic.png';
 
+import cgruleengineMain from '../assets/projects/cgruleengine/cgruleengine_main.jpg';
+import cgruleengineGallery1 from '../assets/projects/cgruleengine/cgruleengine_1.png';
+import cgruleengineGallery2 from '../assets/projects/cgruleengine/cgruleengine_2.png';
+import cgruleengineGallery3 from '../assets/projects/cgruleengine/cgruleengine_3.png';
+
+import personalwebMain from '../assets/projects/personalweb/personalweb_main.png';
+
+import godotcstoolboxMain from '../assets/projects/godotcstoolbox/godotcstoolbox_main.jpg';
+import godotcstoolboxGallery1 from '../assets/projects/godotcstoolbox/godotcstoolbox_1.png';
+
 // Projects data structure
 const projectsData = [
   {
     id: "cgruleengine",
     githubUrl: "https://github.com/ffernu/CGRuleEngine_TFG",
-    tags: ["Java", "Spring Boot", "JUnit", "Java", "Spring Boot", "JUnit"],
-    mainImage: presentationImage,
-    galleryImages: [presentationImage, presentationImage, presentationImage]
-  },
-  {
-    id: "godotcstoolbox",
-    githubUrl: "https://github.com/FFranDev/godot-cs-toolbox",
-    tags: ["C#", "Godot", "Test", "Hallo"],
-    mainImage: presentationImage,
-    galleryImages: [presentationImage, presentationImage]
+    tags: ["C#", ".NET 2.1", "JSON", "Godot"],
+    mainImage: cgruleengineMain,
+    galleryImages: [cgruleengineGallery1, cgruleengineGallery2, cgruleengineGallery3]
   },
   {
     id: "personalweb",
     githubUrl: "https://github.com/FFranDev/personal-web",
-    tags: ["React", "CSS3", "JavaScript"],
-    mainImage: presentationImage,
-    galleryImages: [presentationImage, presentationImage, presentationImage]
+    tags: ["Java", "Spring Boot", "React", "JavaScript", "PostgreSQL", "Docker"],
+    mainImage: personalwebMain,
+    galleryImages: []
+  },
+  {
+    id: "godotcstoolbox",
+    githubUrl: "https://github.com/FFranDev/godot-cs-toolbox",
+    tags: ["C#", "Godot"],
+    mainImage: godotcstoolboxMain,
+    galleryImages: [godotcstoolboxGallery1]
   }
 ];
 

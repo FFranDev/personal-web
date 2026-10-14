@@ -50,5 +50,24 @@
     "level_advanced": "Intermediate",
     "level_competent": "Basic",
     "tech_agentic_desc": "LLM integration and intelligent automation"
+  },
+  "projects": {
+    "greeting": "Explore my personal projects!",
+    "introText1": "Welcome to the section of my personal projects. Here you can explore the different works I invest my time in, which are the main driver that helps me stay in constant learning and evolution. You will find developments of various types, and I always have new ideas in mind ready to come to life in the future.",
+    "introText2": "If you are looking for something specific, you can use the filter on the page to explore the projects based on the technologies and tools I have used in each of them.",
+    "filterAll": "All",
+
+    "showGallery": "Image Gallery",
+    "hideGallery": "Hide Image Gallery",
+    "gallerySwipeMobile": "Swipe to see more images",
+
+    "cgruleengine_title": "CGRuleEngine (TFG)",
+    "cgruleengine_desc": "My Bachelor's Thesis (graded with a 9.9 and nominated for graduation with honors) consisted of the development of CGRuleEngine, a software tool programmed in C# (.NET Standard 2.1) designed to facilitate and streamline the development of card video games by completely isolating the business logic from the graphical layer. It is a modular, robust, scalable, and agnostic rule engine, capable of automatically managing the entire technical infrastructure of a match, including turn control, players, zones, and effect resolution through a stack structure.\nIf you would like to know more about my work, I invite you to take a look at the project report.",
+    
+    "godotcstoolbox_title": "Godot CS Toolbox",
+    "godotcstoolbox_desc": "Godot CS Toolbox consists of an ever-evolving collection of utilities and scripts for the Godot engine. More than a comercial or closed product, this project serves as an experimental space. It is designed to speed up the implementation of prototypes and common mechanics, solve recurring problems, and help establish a clean, reusable, and much more solid architecture for any game project.\nThis personal project was born purely for fun and as the perfect excuse to dive into the world of game development, while continuing to improve and polish my knowledge of the C# language.",
+    
+    "personalweb_title": "Personal Portfolio",
+    "personalweb_desc": "The website where you are reading this is also a personal development project, conceived both as a professional portfolio and a platform for sharing content. The platform is structured into four main sections: Home, Projects, Blog, and Contact. On a technical level, the project blends the speed and efficiency of a purely static website with the versatility of a full frontend and backend architecture to manage dynamic content. The entire visual design has been built from scratch using custom CSS, with a strong focus on responsiveness to ensure full support and a seamless mobile experience."
   }
 }

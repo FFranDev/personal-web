@@ -3,9 +3,9 @@ import './Home.css';
 
 import presentationImage from '../assets/presentation_pic.png';
 
-import logoXeridia from '../assets/logo_xeridia.png';
-import logoRestauration from '../assets/logo_restauration.svg';
-import logoEstalmat from '../assets/logo_estalmat.png';
+import logoXeridia from '../assets/experience/logo_xeridia.png';
+import logoRestauration from '../assets/experience/logo_restauration.svg';
+import logoEstalmat from '../assets/experience/logo_estalmat.png';
 
 // Stack technologies data
 const stackData = [
