@@ -9,7 +9,7 @@ import Contact from './pages/Contact';
 function App() {
   return (
     <Router>
-      <div className="window" style={{ minHeight: "100vh", margin: "0" }}>
+      <div className="window" style={{ margin: "0" }}>
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />

@@ -22,7 +22,11 @@ function Footer() {
           <a href="/FranciscoFernándezUgidos_CV.pdf" download>
             {t("footer.cv")}
           </a>
-          <a href="mailto:franferug@gmail.com">
+          <a 
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=franferug@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {t("footer.email")}
           </a>
         </nav>

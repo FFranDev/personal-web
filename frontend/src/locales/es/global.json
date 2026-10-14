@@ -67,5 +67,24 @@
     
     "personalweb_title": "Portfolio Personal",
     "personalweb_desc": "La página web donde estás leyendo esto es también un proyecto personal, concebido tanto como portfolio profesional como plataforma para compartir contenido. La plataforma está estructurada en cuatro secciones principales: Inicio, Proyectos, Blog y Contacto. A nivel técnico, el proyecto hibrida la rapidez y eficiencia de una web puramente estática con la versatilidad de una arquitectura completa de frontend y backend para la gestión del contenido dinámico. Todo el diseño visual ha sido maquetado desde cero utilizando CSS propio, prestando especial atención a la adaptabilidad para garantizar un soporte total y una experiencia fluida en formato móvil."
+  },
+  "contact": {
+    "greeting": "¡Contacta conmigo!",
+    "introText1": "Si tienes alguna pregunta, una oportunidad laboral o simplemente quieres saludar :), estaré encantado de escucharte. Puedes escribirme directamente a través de mi LinkedIn, correo electrónico o descargar mi currículum mediante los botones inferiores.",
+    "introText2": "Además,también puedes enviarme un correo directamente desde esta misma página rellenando el siguiente formulario. Me aseguraré de responderte lo antes posible.",
+    "linkedInBtn": "Abrir LinkedIn",
+    "emailBtn": "Abrir Correo",
+    "cvBtn": "Descargar CV",
+
+    "formTitle": "Enviar mensaje directo",
+    "labelName": "Nombre:",
+    "placeholderName": "Tu nombre o empresa",
+    "labelEmail": "Correo electrónico:",
+    "placeholderEmail": "ejemplo@correo.com",
+    "labelSubject": "Asunto:",
+    "placeholderSubject": "Motivo del mensaje",
+    "labelMessage": "Mensaje:",
+    "placeholderMessage": "Escribe tu mensaje aquí...",
+    "submitBtn": "Enviar"
   }
 }

@@ -69,5 +69,24 @@
     
     "personalweb_title": "Personal Portfolio",
     "personalweb_desc": "The website where you are reading this is also a personal development project, conceived both as a professional portfolio and a platform for sharing content. The platform is structured into four main sections: Home, Projects, Blog, and Contact. On a technical level, the project blends the speed and efficiency of a purely static website with the versatility of a full frontend and backend architecture to manage dynamic content. The entire visual design has been built from scratch using custom CSS, with a strong focus on responsiveness to ensure full support and a seamless mobile experience."
+  },
+    "contact": {
+    "greeting": "Contact me!",
+    "introText1": "If you have any questions, a job opportunity, or just want to say hello :), I'll be happy to hear from you. You can write to me directly through my LinkedIn, email, or download my resume using the buttons below.",
+    "introText2": "Additionally, you can also send me an email directly from this same page by filling out the form below. I will make sure to respond to you as soon as possible.",
+    "linkedInBtn": "Open LinkedIn",
+    "emailBtn": "Open Email",
+    "cvBtn": "Download CV",
+
+    "formTitle": "Send direct message",
+    "labelName": "Name:",
+    "placeholderName": "Your name or company",
+    "labelEmail": "Email address:",
+    "placeholderEmail": "example@email.com",
+    "labelSubject": "Subject:",
+    "placeholderSubject": "Reason for your message",
+    "labelMessage": "Message:",
+    "placeholderMessage": "Write your message here...",
+    "submitBtn": "Send"
   }
 }
