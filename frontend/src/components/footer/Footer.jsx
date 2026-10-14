@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import logoCream from '../assets/logo_inverted.svg';
+import logoCream from '../../assets/logo_inverted.svg';
 import './Footer.css';
 
 function Footer() {

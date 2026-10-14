@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CSSTransition } from 'react-transition-group';
-import { useTypewriter } from '../hooks/useTypewriter';
-import logoIcon from '../assets/logo.svg';
+import { useTypewriter } from '../../hooks/useTypewriter';
+import logoIcon from '../../assets/logo.svg';
 import './Header.css';
 
 function Header() {
@@ -119,7 +119,6 @@ function Header() {
               ☰
             </button>
 
-            {/* Added ref={navRef} to control scroll position */}
             <nav ref={navRef} className={`field-row header-nav ${isMobileMenuOpen ? 'open' : ''}`}>
               <div className="lang-buttons">
                 <button 

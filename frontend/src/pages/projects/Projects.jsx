@@ -2,17 +2,15 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import './Projects.css';
 
-import presentationImage from '../assets/presentation_pic.png';
+import cgruleengineMain from '../../assets/projects/cgruleengine/cgruleengine_main.jpg';
+import cgruleengineGallery1 from '../../assets/projects/cgruleengine/cgruleengine_1.png';
+import cgruleengineGallery2 from '../../assets/projects/cgruleengine/cgruleengine_2.png';
+import cgruleengineGallery3 from '../../assets/projects/cgruleengine/cgruleengine_3.png';
 
-import cgruleengineMain from '../assets/projects/cgruleengine/cgruleengine_main.jpg';
-import cgruleengineGallery1 from '../assets/projects/cgruleengine/cgruleengine_1.png';
-import cgruleengineGallery2 from '../assets/projects/cgruleengine/cgruleengine_2.png';
-import cgruleengineGallery3 from '../assets/projects/cgruleengine/cgruleengine_3.png';
+import personalwebMain from '../../assets/projects/personalweb/personalweb_main.png';
 
-import personalwebMain from '../assets/projects/personalweb/personalweb_main.png';
-
-import godotcstoolboxMain from '../assets/projects/godotcstoolbox/godotcstoolbox_main.jpg';
-import godotcstoolboxGallery1 from '../assets/projects/godotcstoolbox/godotcstoolbox_1.png';
+import godotcstoolboxMain from '../../assets/projects/godotcstoolbox/godotcstoolbox_main.jpg';
+import godotcstoolboxGallery1 from '../../assets/projects/godotcstoolbox/godotcstoolbox_1.png';
 
 // Projects data structure
 const projectsData = [
