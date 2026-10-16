@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import './Contact.css';
 
 const MAX_MESSAGE_LENGTH = 1500;
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
 function Contact() {
   const [t] = useTranslation("global");
@@ -15,6 +16,20 @@ function Contact() {
     website: '' // Honeypot field
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
+  // Automatically clear status message after 5 seconds
+  useEffect(() => {
+    if (!submitStatus) return;
+
+    const timer = setTimeout(() => {
+      setSubmitStatus(null);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [submitStatus]);
+  
   const handleChange = (e) => {
     const { name, value, maxLength } = e.target;
     
@@ -27,10 +42,33 @@ function Contact() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TEMP: Backend integration will be added here once visual layout is approved
-    console.log("Form submitted:", formData);
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '', website: '' });
+      } else if (response.status === 429) {
+        setSubmitStatus('rate_limit');
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -156,8 +194,24 @@ function Contact() {
             </div>
 
             <div className="form-footer">
-              <button type="submit" className="btn submit-btn">
-                {t("contact.submitBtn")} »
+              <div className="form-status">
+                {submitStatus === 'success' && (
+                  <span className="status-msg success">{t("contact.statusSuccess")}</span>
+                )}
+                {submitStatus === 'rate_limit' && (
+                  <span className="status-msg error">{t("contact.statusRateLimit")}</span>
+                )}
+                {submitStatus === 'error' && (
+                  <span className="status-msg error">{t("contact.statusError")}</span>
+                )}
+              </div>
+
+              <button 
+                type="submit" 
+                className="btn submit-btn" 
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? t("contact.submittingBtn") : `${t("contact.submitBtn")} »`}
               </button>
             </div>
           </form>

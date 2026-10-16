@@ -85,6 +85,11 @@
     "placeholderSubject": "Motivo del mensaje",
     "labelMessage": "Mensaje:",
     "placeholderMessage": "Escribe tu mensaje aquí...",
-    "submitBtn": "Enviar"
+    "submitBtn": "Enviar",
+
+    "submittingBtn": "Enviando...",
+    "statusSuccess": "[ ¡Mensaje enviado con éxito! Te responderé lo antes posible. ]",
+    "statusRateLimit": "[ Has enviado un mensaje recientemente. Por favor, espera unos minutos. ]",
+    "statusError": "[ Error al enviar el mensaje. Por favor, inténtalo de nuevo o usa el botón de correo directo. ]"
   }
 }

@@ -87,6 +87,11 @@
     "placeholderSubject": "Reason for your message",
     "labelMessage": "Message:",
     "placeholderMessage": "Write your message here...",
-    "submitBtn": "Send"
+    "submitBtn": "Send",
+
+    "submittingBtn": "Sending...",
+    "statusSuccess": "[ Message sent successfully! I will respond to you as soon as possible. ]",
+    "statusRateLimit": "[ You have sent a message recently. Please wait a few minutes. ]",
+    "statusError": "[ Error sending the message. Please try again or use the email button. ]"
   }
 }

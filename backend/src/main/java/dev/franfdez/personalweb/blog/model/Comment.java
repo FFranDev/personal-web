@@ -1,4 +1,4 @@
-package dev.franfdez.personalweb.model;
+package dev.franfdez.personalweb.blog.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
