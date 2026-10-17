@@ -93,16 +93,17 @@
     "statusError": "[ Error al enviar el mensaje. Por favor, inténtalo de nuevo o usa el botón de correo directo. ]"
   },
   "blog": {
-    "greetingDesktop": "Notas, avances y proyectos - Blog de Fran",
+    "greetingDesktop": "Blog de Fran - Notas, Avances, Proyectos",
     "greetingMobile": "Blog de Fran",
-    "introText": "Bienvenido a mi espacio personal. Aquí documento los avances técnicos de mis desarrollos, decisiones de arquitectura y notas sobre ingeniería de software.",
-    "lastBtn": "último",
-    "searchPlaceholder": "Buscar entradas por título o contenido...",
+    "introText": "Bienvenido a mi espacio personal. Aquí documento los avances de mis desarrollos, decisiones de arquitectura y notas sobre ingeniería de software o aquello que considere interesante.",
+    "lastBtn": "Último",
+    "searchPlaceholder": "Buscar posts por título o contenido...",
+    
     "publishedBy": "Publicado por Fran en",
-    "showComments": "Comentarios",
+    "showComments": "Mostrar comentarios",
     "hideComments": "Ocultar comentarios",
-    "noComments": "Aún no hay comentarios en esta entrada. ¡Sé el primero en comentar!",
-    "noPostsFound": "No se han encontrado entradas que coincidan con la búsqueda.",
+    "noComments": "Aún no hay comentarios en este post. ¡Sé el primero en comentar!",
+    "noPostsFound": "No se han encontrado posts que coincidan con la búsqueda.",
     "authorBadge": "[AUTOR]",
     "replyBtn": "[ Responder ]",
     "replyingTo": "Responder como [AUTOR] a",
@@ -114,6 +115,7 @@
     "placeholderComment": "Escribe tu comentario aquí...",
     "submitCommentBtn": "Publicar comentario",
     "deletePostBtn": "[ Eliminar Post ]",
+
     "adminLoginTitle": "[ ACCESO AUTOR ]",
     "adminPasswordPlaceholder": "Contraseña de administrador...",
     "adminLoginBtn": "Entrar",

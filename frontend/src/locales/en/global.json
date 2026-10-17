@@ -93,5 +93,41 @@
     "statusSuccess": "[ Message sent successfully! I will respond to you as soon as possible. ]",
     "statusRateLimit": "[ You have sent a message recently. Please wait a few minutes. ]",
     "statusError": "[ Error sending the message. Please try again or use the email button. ]"
+  },
+  "blog": {
+    "greetingDesktop": "Fran's Blog - Notes, Progress, Projects",
+    "greetingMobile": "Fran's Blog",
+    "introText": "Welcome to my personal space. Here I document technical progress on my developments, architectural decisions, and notes on software engineering or anything else I find interesting.",
+    "lastBtn": "Latest",
+    "searchPlaceholder": "Search posts by title or content...",
+
+    "publishedBy": "Published by Fran on",
+    "showComments": "Show comments",
+    "hideComments": "Hide comments",
+    "noComments": "There are no comments on this post yet. Be the first to comment!",
+    "noPostsFound": "No posts found matching your search.",
+    "authorBadge": "[AUTHOR]",
+    "replyBtn": "[ Reply ]",
+    "replyingTo": "Reply as [AUTHOR] to",
+    "placeholderReply": "Write your reply...",
+    "cancelBtn": "Cancel",
+    "submitReplyBtn": "Reply",
+    "addCommentTitle": "Add a comment",
+    "placeholderAlias": "Your name or alias",
+    "placeholderComment": "Write your comment here...",
+    "submitCommentBtn": "Post comment",
+    "deletePostBtn": "[ Delete Post ]",
+    
+    "adminLoginTitle": "[ AUTHOR ACCESS ]",
+    "adminPasswordPlaceholder": "Admin password...",
+    "adminLoginBtn": "Login",
+    "adminCreateTitle": "[ AUTHOR MODE: PUBLISH NEW POST ]",
+    "adminLogoutBtn": "[ Log out ]",
+    "adminPostTitleLabel": "Post title",
+    "adminPostTitlePlaceholder": "Post title...",
+    "adminPostContentLabel": "Content",
+    "adminPostContentPlaceholder": "Write the post body...",
+    "adminPostImagesLabel": "Gallery images (Optional)",
+    "adminPublishBtn": "Publish Post"
   }
 }

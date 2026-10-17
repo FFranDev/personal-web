@@ -2,14 +2,15 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import './Blog.css';
 
+// Mock images for gallery previews
 import cgruleengineMain from '../../assets/projects/cgruleengine/cgruleengine_main.jpg';
 import cgruleengineGallery1 from '../../assets/projects/cgruleengine/cgruleengine_1.png';
 import personalwebMain from '../../assets/projects/personalweb/personalweb_main.png';
 
-const POSTS_PER_PAGE = 5;
+const POSTS_PER_PAGE = 3;
 const MAX_COMMENT_LENGTH = 600;
 
-// Initial mock data to test pagination, gallery, and nested comments before backend integration
+// TEMP: initial mock data to test pagination, gallery, and nested comments before backend integration
 const INITIAL_MOCK_POSTS = [
   {
     id: 1,
@@ -75,30 +76,27 @@ const INITIAL_MOCK_POSTS = [
     content: "Definición de los requisitos iniciales del Trabajo de Fin de Grado: separar al 100% la lógica del juego de la interfaz gráfica mediante una librería en .NET Standard 2.1.",
     imageUrls: [],
     comments: []
-  }
+  },
 ];
 
-// Builds compact pagination array (e.g. [1, 2, '...', 5])
+// Builds fixed-max-4-buttons pagination array (e.g. [1, 2, 3, '...', 8] or [1, '...', 6, 7, 8])
 function getPaginationItems(currentPage, totalPages) {
   if (totalPages <= 4) {
     return Array.from({ length: totalPages }, (_, i) => i + 1);
   }
 
-  const pages = new Set([1, totalPages, currentPage]);
-  if (currentPage > 1) pages.add(currentPage - 1);
-  if (currentPage < totalPages) pages.add(currentPage + 1);
-
-  const sortedPages = Array.from(pages).sort((a, b) => a - b);
-  const result = [];
-
-  for (let i = 0; i < sortedPages.length; i++) {
-    if (i > 0 && sortedPages[i] - sortedPages[i - 1] > 1) {
-      result.push('...');
-    }
-    result.push(sortedPages[i]);
+  // Near the start (pages 1, 2) -> show first 3 + last
+  if (currentPage <= 2) {
+    return [1, 2, 3, '...', totalPages];
   }
 
-  return result;
+  // Near the end (last 2 pages) -> show first + last 3
+  if (currentPage >= totalPages - 1) {
+    return [1, '...', totalPages - 2, totalPages - 1, totalPages];
+  }
+
+  // Middle pages (e.g. page 4 of 8 -> 2, 3, 4, '...', 8)
+  return [currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
 }
 
 function PaginationNumbers({ currentPage, totalPages, onSelectPage }) {
@@ -226,7 +224,6 @@ function CommentSection({ postId, comments, isAdmin, onAddComment, onDeleteComme
   const [replyText, setReplyText] = useState('');
   const [visitorForm, setVisitorForm] = useState({ authorName: '', text: '', website: '' });
 
-  // Group top-level comments and their 1-level replies
   const rootComments = useMemo(() => comments.filter(c => !c.parentId), [comments]);
   const getReplies = (parentId) => comments.filter(c => c.parentId === parentId);
 
@@ -468,22 +465,24 @@ function BlogPostCard({ post, isAdmin, onDeletePost, onAddComment, onDeleteComme
 function Blog() {
   const [t] = useTranslation("global");
 
-  const [posts, setPosts] = useState(INITIAL_MOCK_POSTS);
-  const [searchQuery, setSearchQuery] = useState('');
+const [posts, setPosts] = useState(INITIAL_MOCK_POSTS);
+  const [searchInput, setSearchInput] = useState('');
+  const [appliedQuery, setAppliedQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [isLastModeActive, setIsLastModeActive] = useState(true);
 
-  // Secret Admin states (Triggered by Ctrl+Shift+L or 3 clicks on the blog title)
+  // "Last" button is automatically ON when on page 1 with no active search filter
+  const isLastModeActive = currentPage === 1 && appliedQuery === '';
+
+  // Admin states (Desktop only via Ctrl+Shift+L)
   const [showAdminPrompt, setShowAdminPrompt] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [adminPassword, setAdminPassword] = useState('');
   const [newPostForm, setNewPostForm] = useState({ title: '', content: '', files: [] });
-  const titleClickCount = useRef(0);
-  const titleClickTimer = useRef(null);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'l') {
+      // Only trigger on desktop screens (> 1000px)
+      if (window.innerWidth > 1000 && e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'l') {
         e.preventDefault();
         setShowAdminPrompt(prev => !prev);
       }
@@ -492,29 +491,15 @@ function Blog() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const handleTitleSecretClick = () => {
-    titleClickCount.current += 1;
-    clearTimeout(titleClickTimer.current);
-
-    if (titleClickCount.current >= 3) {
-      titleClickCount.current = 0;
-      setShowAdminPrompt(prev => !prev);
-    } else {
-      titleClickTimer.current = setTimeout(() => {
-        titleClickCount.current = 0;
-      }, 500);
-    }
-  };
-
   const filteredPosts = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase();
+    const query = appliedQuery.trim().toLowerCase();
     if (!query) return posts;
     return posts.filter(
       post =>
         post.title.toLowerCase().includes(query) ||
         post.content.toLowerCase().includes(query)
     );
-  }, [posts, searchQuery]);
+  }, [posts, appliedQuery]);
 
   const totalPages = Math.max(1, Math.ceil(filteredPosts.length / POSTS_PER_PAGE));
 
@@ -524,24 +509,25 @@ function Blog() {
   }, [filteredPosts, currentPage]);
 
   const handleLastClick = () => {
-    setIsLastModeActive(true);
-    setSearchQuery('');
+    setSearchInput('');
+    setAppliedQuery('');
     setCurrentPage(1);
   };
 
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-    setCurrentPage(1);
-    setIsLastModeActive(false);
+  const handleSearchKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      setAppliedQuery(searchInput.trim());
+      setCurrentPage(1);
+    }
   };
 
   const handleSelectPage = (pageNumber) => {
     if (pageNumber < 1 || pageNumber > totalPages) return;
     setCurrentPage(pageNumber);
-    setIsLastModeActive(false);
   };
 
-  // Mock handlers ready to be replaced by Backend API calls in Step 3 & 4
+  // Mock handlers ready to be replaced by Backend API calls
   const handleAdminLogin = (e) => {
     e.preventDefault();
     if (adminPassword.trim()) {
@@ -618,7 +604,7 @@ function Blog() {
 
         {/* Top Intro & Controls Panel */}
         <section className="panel blog-intro">
-          <h2 className="section-title" onClick={handleTitleSecretClick}>
+          <h2 className="section-title">
             <span className="blog-title-desktop">{t("blog.greetingDesktop")}</span>
             <span className="blog-title-mobile">{t("blog.greetingMobile")}</span>
           </h2>
@@ -638,8 +624,9 @@ function Blog() {
                   type="text"
                   className="blog-search-input"
                   placeholder={t("blog.searchPlaceholder")}
-                  value={searchQuery}
-                  onChange={handleSearchChange}
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                  onKeyDown={handleSearchKeyDown}
                 />
               </div>
 
@@ -649,13 +636,6 @@ function Blog() {
                   totalPages={totalPages}
                   onSelectPage={handleSelectPage}
                 />
-                <div className="mobile-only-arrows">
-                  <PaginationArrows
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onSelectPage={handleSelectPage}
-                  />
-                </div>
               </div>
             </div>
 

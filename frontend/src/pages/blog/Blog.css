@@ -39,7 +39,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  text-transform: lowercase;
   font-size: 0.85rem;
   background-color: rgba(0, 0, 0, 0.03);
   flex-shrink: 0;
@@ -71,20 +70,23 @@
   border: var(--border-width) solid var(--main-color);
   box-shadow: inset 4px 4px 0px 0px rgba(0, 0, 0, 0.05);
   padding: 8px;
+  width: 200px;
   height: 54px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: left;
+  gap: 6px;
   flex-shrink: 0;
 }
 
 .page-num-btn {
   margin: 0;
-  padding: 4px 10px;
+  padding: 0;
   font-size: 0.9rem;
-  min-width: 34px;
+  width: 34px;
   height: 34px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -92,8 +94,10 @@
 
 .page-ellipsis {
   font-weight: bold;
-  padding: 0 4px;
+  width: 20px;
+  text-align: center;
   user-select: none;
+  flex-shrink: 0;
 }
 
 .pagination-arrows {
@@ -104,10 +108,6 @@
 
 .desktop-only-arrows {
   margin-bottom: -4px;
-}
-
-.mobile-only-arrows {
-  display: none;
 }
 
 .page-arrow-btn {
@@ -134,7 +134,7 @@
 
 /* Blog Post Card */
 .blog-card {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .blog-post-header {
@@ -171,7 +171,6 @@
   margin-bottom: 20px;
 }
 
-/* Always-visible Post Gallery */
 .blog-gallery-wrapper {
   margin-top: 16px;
   margin-bottom: 20px;
@@ -196,17 +195,15 @@
   gap: 8px;
   margin-right: 16px;
   margin-top: 12px;
+  margin-bottom: -16px;
 }
 
 .blog-gallery-wrapper .gallery-counter {
   display: none;
 }
 
-/* Collapsible Comments Section */
-.blog-comments-wrapper {
-  border-top: 1px dashed var(--main-color);
-  padding-top: 12px;
-  margin-top: 8px;
+.blog-posts-list {
+  margin-bottom: 0px;
 }
 
 .comments-toggle-btn {
@@ -264,7 +261,7 @@
   box-shadow: inset 4px 4px 0px 0px rgba(0, 0, 0, 0.08);
 }
 
-/* 1-Level Indented Author Replies */
+/* Level Indented Author Replies */
 .comment-reply-wrapper {
   display: flex;
   align-items: stretch;
@@ -439,6 +436,7 @@
   align-items: flex-end;
   gap: 8px;
   margin-bottom: 0;
+  margin-top: -8px;
 }
 
 /* Secret Admin Panel */
@@ -507,19 +505,16 @@
     gap: 12px;
   }
 
-  .pagination-mobile-row {
+.pagination-mobile-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     width: 100%;
   }
 
-  .desktop-only-arrows {
+  .desktop-only-arrows,
+  .pagination-arrows {
     display: none;
-  }
-
-  .mobile-only-arrows {
-    display: block;
   }
 
   .comment-reply-wrapper {
@@ -543,10 +538,8 @@
   }
 
   .bottom-pagination-panel {
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    width: auto;
+    align-items: right;
   }
 
   .admin-login-row {
