@@ -1,6 +1,14 @@
 package dev.franfdez.personalweb.blog.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,18 +19,23 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "author_name", nullable = false, length = 60)
+    private String authorName;
+
+    @Column(name = "is_author", nullable = false)
+    private boolean isAuthor = false;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String text;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "parent_id")
+    private Long parentId;
 
-    @ManyToOne
-    @JoinColumn(name = "blog_post_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "blog_post_id", nullable = false)
     private BlogPost blogPost;
 
     public Long getId() {
@@ -31,6 +44,22 @@ public class Comment {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public boolean isAuthor() {
+        return isAuthor;
+    }
+
+    public void setAuthor(boolean isAuthor) {
+        this.isAuthor = isAuthor;
     }
 
     public String getText() {
@@ -49,12 +78,12 @@ public class Comment {
         this.createdAt = createdAt;
     }
 
-    public User getUser() {
-        return user;
+    public Long getParentId() {
+        return parentId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
     }
 
     public BlogPost getBlogPost() {

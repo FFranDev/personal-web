@@ -1,9 +1,20 @@
 package dev.franfdez.personalweb.blog.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
+import jakarta.persistence.Table;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "blog_posts")
@@ -13,21 +24,23 @@ public class BlogPost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, length = 150)
     private String title;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
-
-    @Column(name = "is_draft")
-    private boolean isDraft = true;
 
     @ElementCollection
     @CollectionTable(name = "blog_post_images", joinColumns = @JoinColumn(name = "blog_post_id"))
     @Column(name = "image_url")
     private List<String> imageUrls = new ArrayList<>();
+
+    @OneToMany(mappedBy = "blogPost", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("createdAt ASC")
+    private List<Comment> comments = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -61,19 +74,19 @@ public class BlogPost {
         this.createdAt = createdAt;
     }
 
-    public boolean isDraft() {
-        return isDraft;
-    }
-
-    public void setDraft(boolean isDraft) {
-        this.isDraft = isDraft;
-    }
-
     public List<String> getImageUrls() {
         return imageUrls;
     }
 
     public void setImageUrls(List<String> imageUrls) {
         this.imageUrls = imageUrls;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

@@ -1,83 +1,11 @@
-import { useState, useMemo, useEffect, useRef } from 'react';
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import './Blog.css';
 
-// Mock images for gallery previews
-import cgruleengineMain from '../../assets/projects/cgruleengine/cgruleengine_main.jpg';
-import cgruleengineGallery1 from '../../assets/projects/cgruleengine/cgruleengine_1.png';
-import personalwebMain from '../../assets/projects/personalweb/personalweb_main.png';
-
-const POSTS_PER_PAGE = 3;
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+const ADMIN_TOKEN_KEY = 'blog_admin_token';
+const POSTS_PER_PAGE = 5;
 const MAX_COMMENT_LENGTH = 600;
-
-// TEMP: initial mock data to test pagination, gallery, and nested comments before backend integration
-const INITIAL_MOCK_POSTS = [
-  {
-    id: 1,
-    title: "Arquitectura de pila de efectos en CGRuleEngine",
-    createdAt: "17/10/2026",
-    content: "Uno de los mayores retos al desarrollar un motor de reglas para juegos de cartas es resolver correctamente las cadenas de efectos cuando una carta responde a otra.\n\nEn esta entrada repaso cómo implementé una estructura LIFO (Last In, First Out) desacoplada de Godot para que cualquier efecto pueda pausar la partida, pedir objetivos y resolverse en orden inverso.",
-    imageUrls: [cgruleengineMain, cgruleengineGallery1],
-    comments: [
-      {
-        id: 101,
-        authorName: "Carlos M.",
-        isAuthor: false,
-        createdAt: "17/10/2026",
-        text: "¡Muy buen enfoque! ¿La pila permite cancelar efectos intermedios antes de que se resuelvan?",
-        parentId: null
-      },
-      {
-        id: 102,
-        authorName: "Fran",
-        isAuthor: true,
-        createdAt: "17/10/2026",
-        text: "¡Gracias Carlos! Sí, cualquier nodo de la pila puede anular o modificar un efecto inferior antes de su ejecución.",
-        parentId: 101
-      }
-    ]
-  },
-  {
-    id: 2,
-    title: "Estreno del nuevo portfolio con React y Spring Boot",
-    createdAt: "14/10/2026",
-    content: "Hoy queda inaugurada la versión renovada de mi web personal. El objetivo principal era construir una interfaz rápida y con personalidad propia inspirada en sistemas clásicos, respaldada por un backend en Java 25 con Spring Boot y PostgreSQL contenerizado en Docker.",
-    imageUrls: [personalwebMain],
-    comments: []
-  },
-  {
-    id: 3,
-    title: "Utilidades para prototipado rápido en Godot con C#",
-    createdAt: "10/10/2026",
-    content: "Durante las últimas semanas he estado recopilando patrones que repito constantemente al iniciar proyectos en Godot: máquinas de estados finitos, gestores de audio centralizados y sistemas de eventos tipados en C#.",
-    imageUrls: [],
-    comments: []
-  },
-  {
-    id: 4,
-    title: "Contenerización de entornos de desarrollo Full-Stack",
-    createdAt: "05/10/2026",
-    content: "Configurar Docker Compose con healthchecks entre PostgreSQL y Spring Boot evita los clásicos fallos de conexión en el arranque cuando el contenedor de la aplicación levanta más rápido que el motor de base de datos.",
-    imageUrls: [],
-    comments: []
-  },
-  {
-    id: 5,
-    title: "Diseño de interfaces retro solo con CSS nativo",
-    createdAt: "28/09/2026",
-    content: "Prescindir de librerías pesadas de componentes permite controlar al píxel los bordes dobles, sombras sólidas desplazadas y animaciones discretas por pasos mediante steps() en CSS.",
-    imageUrls: [],
-    comments: []
-  },
-  {
-    id: 6,
-    title: "Primeras notas sobre el desarrollo de CGRuleEngine",
-    createdAt: "15/09/2026",
-    content: "Definición de los requisitos iniciales del Trabajo de Fin de Grado: separar al 100% la lógica del juego de la interfaz gráfica mediante una librería en .NET Standard 2.1.",
-    imageUrls: [],
-    comments: []
-  },
-];
 
 // Builds fixed-max-4-buttons pagination array (e.g. [1, 2, 3, '...', 8] or [1, '...', 6, 7, 8])
 function getPaginationItems(currentPage, totalPages) {
@@ -174,6 +102,11 @@ function PostGallery({ images, postTitle }) {
     touchStartX.current = null;
   };
 
+  const currentImageUrl = images[currentIndex] || '';
+  const resolvedImageSrc = currentImageUrl.startsWith('http')
+    ? currentImageUrl
+    : `${API_BASE_URL}${currentImageUrl}`;
+
   return (
     <div className="blog-gallery-wrapper">
       <div
@@ -182,7 +115,7 @@ function PostGallery({ images, postTitle }) {
         onTouchEnd={handleTouchEnd}
       >
         <img
-          src={images[currentIndex]}
+          src={resolvedImageSrc}
           alt={`${postTitle} capture ${currentIndex + 1}`}
           className="gallery-image"
         />
@@ -223,6 +156,7 @@ function CommentSection({ postId, comments, isAdmin, onAddComment, onDeleteComme
   const [replyingToId, setReplyingToId] = useState(null);
   const [replyText, setReplyText] = useState('');
   const [visitorForm, setVisitorForm] = useState({ authorName: '', text: '', website: '' });
+  const [isSubmittingComment, setIsSubmittingComment] = useState(false);
 
   const rootComments = useMemo(() => comments.filter(c => !c.parentId), [comments]);
   const getReplies = (parentId) => comments.filter(c => c.parentId === parentId);
@@ -233,29 +167,41 @@ function CommentSection({ postId, comments, isAdmin, onAddComment, onDeleteComme
     setVisitorForm(prev => ({ ...prev, [name]: finalValue }));
   };
 
-  const handleVisitorSubmit = (e) => {
+  const handleVisitorSubmit = async (e) => {
     e.preventDefault();
-    if (visitorForm.website) return; // Honeypot check
+    if (visitorForm.website || isSubmittingComment) return;
 
-    onAddComment(postId, {
+    setIsSubmittingComment(true);
+    const success = await onAddComment(postId, {
       authorName: isAdmin ? "Fran" : visitorForm.authorName.trim(),
-      isAuthor: isAdmin,
       text: visitorForm.text.trim(),
-      parentId: null
+      parentId: null,
+      website: visitorForm.website
     });
-    setVisitorForm({ authorName: '', text: '', website: '' });
+    setIsSubmittingComment(false);
+
+    if (success) {
+      setVisitorForm({ authorName: '', text: '', website: '' });
+    }
   };
 
-  const handleReplySubmit = (e, parentCommentId) => {
+  const handleReplySubmit = async (e, parentCommentId) => {
     e.preventDefault();
-    onAddComment(postId, {
+    if (isSubmittingComment) return;
+
+    setIsSubmittingComment(true);
+    const success = await onAddComment(postId, {
       authorName: "Fran",
-      isAuthor: true,
       text: replyText.trim(),
-      parentId: parentCommentId
+      parentId: parentCommentId,
+      website: ''
     });
-    setReplyText('');
-    setReplyingToId(null);
+    setIsSubmittingComment(false);
+
+    if (success) {
+      setReplyText('');
+      setReplyingToId(null);
+    }
   };
 
   return (
@@ -359,7 +305,11 @@ function CommentSection({ postId, comments, isAdmin, onAddComment, onDeleteComme
                           >
                             {t("blog.cancelBtn")}
                           </button>
-                          <button type="submit" className="btn admin-action-btn">
+                          <button
+                            type="submit"
+                            className="btn admin-action-btn"
+                            disabled={isSubmittingComment}
+                          >
                             {t("blog.submitReplyBtn")} »
                           </button>
                         </div>
@@ -411,7 +361,7 @@ function CommentSection({ postId, comments, isAdmin, onAddComment, onDeleteComme
             </div>
 
             <div className="comment-form-footer">
-              <button type="submit" className="btn">
+              <button type="submit" className="btn" disabled={isSubmittingComment}>
                 {t("blog.submitCommentBtn")} »
               </button>
             </div>
@@ -465,7 +415,8 @@ function BlogPostCard({ post, isAdmin, onDeletePost, onAddComment, onDeleteComme
 function Blog() {
   const [t] = useTranslation("global");
 
-const [posts, setPosts] = useState(INITIAL_MOCK_POSTS);
+  const [posts, setPosts] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
   const [searchInput, setSearchInput] = useState('');
   const [appliedQuery, setAppliedQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -475,9 +426,41 @@ const [posts, setPosts] = useState(INITIAL_MOCK_POSTS);
 
   // Admin states (Desktop only via Ctrl+Shift+L)
   const [showAdminPrompt, setShowAdminPrompt] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [adminToken, setAdminToken] = useState(() => sessionStorage.getItem(ADMIN_TOKEN_KEY) || '');
   const [adminPassword, setAdminPassword] = useState('');
   const [newPostForm, setNewPostForm] = useState({ title: '', content: '', files: [] });
+  const [isPublishingPost, setIsPublishingPost] = useState(false);
+  const fileInputRef = useRef(null);
+
+  const isAdmin = Boolean(adminToken);
+
+  const clearAdminSession = useCallback(() => {
+    sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+    setAdminToken('');
+  }, []);
+
+  const fetchPosts = useCallback(async (pageToFetch, queryToFetch) => {
+    try {
+      const params = new URLSearchParams({
+        page: String(pageToFetch),
+        size: String(POSTS_PER_PAGE),
+        search: queryToFetch
+      });
+
+      const response = await fetch(`${API_BASE_URL}/api/blog/posts?${params.toString()}`);
+      if (!response.ok) return;
+
+      const data = await response.json();
+      setPosts(data.posts || []);
+      setTotalPages(Math.max(1, data.totalPages || 1));
+    } catch (error) {
+      console.error("Failed to fetch blog posts:", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchPosts(currentPage, appliedQuery);
+  }, [currentPage, appliedQuery, fetchPosts]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -490,23 +473,6 @@ const [posts, setPosts] = useState(INITIAL_MOCK_POSTS);
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
-
-  const filteredPosts = useMemo(() => {
-    const query = appliedQuery.trim().toLowerCase();
-    if (!query) return posts;
-    return posts.filter(
-      post =>
-        post.title.toLowerCase().includes(query) ||
-        post.content.toLowerCase().includes(query)
-    );
-  }, [posts, appliedQuery]);
-
-  const totalPages = Math.max(1, Math.ceil(filteredPosts.length / POSTS_PER_PAGE));
-
-  const paginatedPosts = useMemo(() => {
-    const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-    return filteredPosts.slice(startIndex, startIndex + POSTS_PER_PAGE);
-  }, [filteredPosts, currentPage]);
 
   const handleLastClick = () => {
     setSearchInput('');
@@ -527,75 +493,181 @@ const [posts, setPosts] = useState(INITIAL_MOCK_POSTS);
     setCurrentPage(pageNumber);
   };
 
-  // Mock handlers ready to be replaced by Backend API calls
-  const handleAdminLogin = (e) => {
+  const handleAdminLogin = async (e) => {
     e.preventDefault();
-    if (adminPassword.trim()) {
-      setIsAdmin(true);
+    if (!adminPassword.trim()) return;
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/blog/admin/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: adminPassword })
+      });
+
+      if (!response.ok) {
+        setAdminPassword('');
+        return;
+      }
+
+      const data = await response.json();
+      sessionStorage.setItem(ADMIN_TOKEN_KEY, data.token);
+      setAdminToken(data.token);
       setAdminPassword('');
+    } catch (error) {
+      console.error("Admin login failed:", error);
     }
   };
 
-  const handleCreatePost = (e) => {
+  const handleAdminLogout = async () => {
+    try {
+      if (adminToken) {
+        await fetch(`${API_BASE_URL}/api/blog/admin/logout`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${adminToken}` }
+        });
+      }
+    } catch (error) {
+      console.error("Admin logout failed:", error);
+    } finally {
+      clearAdminSession();
+      setShowAdminPrompt(false);
+    }
+  };
+
+  const handleCreatePost = async (e) => {
     e.preventDefault();
-    const previewUrls = Array.from(newPostForm.files).map(file => URL.createObjectURL(file));
-    const today = new Date().toLocaleDateString('es-ES', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
+    if (isPublishingPost) return;
+
+    const formData = new FormData();
+    formData.append('title', newPostForm.title.trim());
+    formData.append('content', newPostForm.content.trim());
+
+    Array.from(newPostForm.files).forEach(file => {
+      formData.append('images', file);
     });
 
-    const createdPost = {
-      id: Date.now(),
-      title: newPostForm.title.trim(),
-      content: newPostForm.content.trim(),
-      createdAt: today,
-      imageUrls: previewUrls,
-      comments: []
-    };
+    setIsPublishingPost(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/blog/posts`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${adminToken}` },
+        body: formData
+      });
 
-    setPosts(prev => [createdPost, ...prev]);
-    setNewPostForm({ title: '', content: '', files: [] });
-    handleLastClick();
+      if (response.status === 401) {
+        clearAdminSession();
+        return;
+      }
+
+      if (response.ok) {
+        setNewPostForm({ title: '', content: '', files: [] });
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
+        handleLastClick();
+        await fetchPosts(1, '');
+      }
+    } catch (error) {
+      console.error("Failed to create post:", error);
+    } finally {
+      setIsPublishingPost(false);
+    }
   };
 
-  const handleDeletePost = (postId) => {
-    setPosts(prev => prev.filter(p => p.id !== postId));
+  const handleDeletePost = async (postId) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/blog/posts/${postId}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${adminToken}` }
+      });
+
+      if (response.status === 401) {
+        clearAdminSession();
+        return;
+      }
+
+      if (response.ok) {
+        const nextPage = posts.length === 1 && currentPage > 1 ? currentPage - 1 : currentPage;
+        if (nextPage !== currentPage) {
+          setCurrentPage(nextPage);
+        } else {
+          await fetchPosts(currentPage, appliedQuery);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to delete post:", error);
+    }
   };
 
-  const handleAddComment = (postId, newCommentData) => {
-    const today = new Date().toLocaleDateString('es-ES', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
+  const handleAddComment = async (postId, newCommentData) => {
+    try {
+      const headers = { 'Content-Type': 'application/json' };
+      if (adminToken) {
+        headers.Authorization = `Bearer ${adminToken}`;
+      }
 
-    const createdComment = {
-      id: Date.now(),
-      createdAt: today,
-      ...newCommentData
-    };
+      const response = await fetch(`${API_BASE_URL}/api/blog/posts/${postId}/comments`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(newCommentData)
+      });
 
-    setPosts(prev =>
-      prev.map(post =>
-        post.id === postId
-          ? { ...post, comments: [...post.comments, createdComment] }
-          : post
-      )
-    );
+      if (response.status === 401 && adminToken) {
+        clearAdminSession();
+        return false;
+      }
+
+      if (!response.ok) {
+        return false;
+      }
+
+      // Honeypot returns 200 OK with empty body
+      if (response.status === 200) {
+        return true;
+      }
+
+      const createdComment = await response.json();
+      setPosts(prev =>
+        prev.map(post =>
+          post.id === postId
+            ? { ...post, comments: [...post.comments, createdComment] }
+            : post
+        )
+      );
+      return true;
+    } catch (error) {
+      console.error("Failed to add comment:", error);
+      return false;
+    }
   };
 
-  const handleDeleteComment = (postId, commentId) => {
-    setPosts(prev =>
-      prev.map(post =>
-        post.id === postId
-          ? {
-              ...post,
-              comments: post.comments.filter(c => c.id !== commentId && c.parentId !== commentId)
-            }
-          : post
-      )
-    );
+  const handleDeleteComment = async (postId, commentId) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/blog/comments/${commentId}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${adminToken}` }
+      });
+
+      if (response.status === 401) {
+        clearAdminSession();
+        return;
+      }
+
+      if (response.ok) {
+        setPosts(prev =>
+          prev.map(post =>
+            post.id === postId
+              ? {
+                  ...post,
+                  comments: post.comments.filter(c => c.id !== commentId && c.parentId !== commentId)
+                }
+              : post
+          )
+        );
+      }
+    } catch (error) {
+      console.error("Failed to delete comment:", error);
+    }
   };
 
   return (
@@ -675,10 +747,7 @@ const [posts, setPosts] = useState(INITIAL_MOCK_POSTS);
                   <button
                     type="button"
                     className="btn admin-action-btn"
-                    onClick={() => {
-                      setIsAdmin(false);
-                      setShowAdminPrompt(false);
-                    }}
+                    onClick={handleAdminLogout}
                   >
                     {t("blog.adminLogoutBtn")}
                   </button>
@@ -710,6 +779,7 @@ const [posts, setPosts] = useState(INITIAL_MOCK_POSTS);
                 <div className="form-group">
                   <label>{t("blog.adminPostImagesLabel")}</label>
                   <input
+                    ref={fileInputRef}
                     type="file"
                     multiple
                     accept="image/*"
@@ -718,7 +788,7 @@ const [posts, setPosts] = useState(INITIAL_MOCK_POSTS);
                 </div>
 
                 <div className="comment-form-footer">
-                  <button type="submit" className="btn">
+                  <button type="submit" className="btn" disabled={isPublishingPost}>
                     {t("blog.adminPublishBtn")} »
                   </button>
                 </div>
@@ -729,12 +799,12 @@ const [posts, setPosts] = useState(INITIAL_MOCK_POSTS);
 
         {/* Blog Posts List */}
         <section className="blog-posts-list">
-          {paginatedPosts.length === 0 ? (
+          {posts.length === 0 ? (
             <div className="panel">
               <p className="no-results-msg">{t("blog.noPostsFound")}</p>
             </div>
           ) : (
-            paginatedPosts.map(post => (
+            posts.map(post => (
               <BlogPostCard
                 key={post.id}
                 post={post}
