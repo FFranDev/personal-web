@@ -415,12 +415,14 @@
 
 .comment-form-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
 }
 
 .comment-form-footer .btn {
   margin: 0;
-  text-transform: uppercase;
+  flex-shrink: 0;
 }
 
 /* Bottom Pagination */
@@ -505,7 +507,7 @@
     gap: 12px;
   }
 
-.pagination-mobile-row {
+  .pagination-mobile-row {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -519,6 +521,15 @@
 
   .comment-reply-wrapper {
     margin-left: 12px;
+  }
+
+  .comment-form-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .comment-form-footer .btn {
+    width: 100%;
   }
 
   .inline-reply-form {

@@ -114,6 +114,10 @@
     "placeholderAlias": "Tu nombre o alias",
     "placeholderComment": "Escribe tu comentario aquí...",
     "submitCommentBtn": "Publicar comentario",
+    "submittingCommentBtn": "Publicando...",
+    "commentStatusSuccess": "[ ¡Comentario publicado con éxito! ]",
+    "commentStatusRateLimit": "[ Has comentado recientemente. Espera un minuto antes de publicar otro. ]",
+    "commentStatusError": "[ Error al publicar el comentario. Inténtalo de nuevo. ]",
     "deletePostBtn": "[ Eliminar Post ]",
 
     "adminLoginTitle": "[ ACCESO AUTOR ]",

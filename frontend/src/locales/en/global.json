@@ -116,6 +116,10 @@
     "placeholderAlias": "Your name or alias",
     "placeholderComment": "Write your comment here...",
     "submitCommentBtn": "Post comment",
+    "submittingCommentBtn": "Posting...",
+    "commentStatusSuccess": "[ Comment posted successfully! ]",
+    "commentStatusRateLimit": "[ You commented recently. Please wait a minute before posting again. ]",
+    "commentStatusError": "[ Failed to post comment. Please try again. ]",
     "deletePostBtn": "[ Delete Post ]",
     
     "adminLoginTitle": "[ AUTHOR ACCESS ]",

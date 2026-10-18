@@ -157,6 +157,17 @@ function CommentSection({ postId, comments, isAdmin, onAddComment, onDeleteComme
   const [replyText, setReplyText] = useState('');
   const [visitorForm, setVisitorForm] = useState({ authorName: '', text: '', website: '' });
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
+  useEffect(() => {
+    if (!submitStatus) return;
+
+    const timer = setTimeout(() => {
+      setSubmitStatus(null);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [submitStatus]);
 
   const rootComments = useMemo(() => comments.filter(c => !c.parentId), [comments]);
   const getReplies = (parentId) => comments.filter(c => c.parentId === parentId);
@@ -169,18 +180,28 @@ function CommentSection({ postId, comments, isAdmin, onAddComment, onDeleteComme
 
   const handleVisitorSubmit = async (e) => {
     e.preventDefault();
-    if (visitorForm.website || isSubmittingComment) return;
+    if (isSubmittingComment) return;
+
+    if (visitorForm.website) {
+      setSubmitStatus('success');
+      setVisitorForm({ authorName: '', text: '', website: '' });
+      return;
+    }
 
     setIsSubmittingComment(true);
-    const success = await onAddComment(postId, {
+    setSubmitStatus(null);
+
+    const status = await onAddComment(postId, {
       authorName: isAdmin ? "Fran" : visitorForm.authorName.trim(),
       text: visitorForm.text.trim(),
       parentId: null,
       website: visitorForm.website
     });
-    setIsSubmittingComment(false);
 
-    if (success) {
+    setIsSubmittingComment(false);
+    setSubmitStatus(status);
+
+    if (status === 'success') {
       setVisitorForm({ authorName: '', text: '', website: '' });
     }
   };
@@ -190,7 +211,7 @@ function CommentSection({ postId, comments, isAdmin, onAddComment, onDeleteComme
     if (isSubmittingComment) return;
 
     setIsSubmittingComment(true);
-    const success = await onAddComment(postId, {
+    const status = await onAddComment(postId, {
       authorName: "Fran",
       text: replyText.trim(),
       parentId: parentCommentId,
@@ -198,7 +219,7 @@ function CommentSection({ postId, comments, isAdmin, onAddComment, onDeleteComme
     });
     setIsSubmittingComment(false);
 
-    if (success) {
+    if (status === 'success') {
       setReplyText('');
       setReplyingToId(null);
     }
@@ -361,8 +382,20 @@ function CommentSection({ postId, comments, isAdmin, onAddComment, onDeleteComme
             </div>
 
             <div className="comment-form-footer">
-              <button type="submit" className="btn" disabled={isSubmittingComment}>
-                {t("blog.submitCommentBtn")} »
+              <div className="form-status">
+                {submitStatus === 'success' && (
+                  <span className="status-msg success">{t("blog.commentStatusSuccess")}</span>
+                )}
+                {submitStatus === 'rate_limit' && (
+                  <span className="status-msg error">{t("blog.commentStatusRateLimit")}</span>
+                )}
+                {submitStatus === 'error' && (
+                  <span className="status-msg error">{t("blog.commentStatusError")}</span>
+                )}
+              </div>
+
+              <button type="submit" className="btn submit-btn" disabled={isSubmittingComment}>
+                {isSubmittingComment ? t("blog.submittingCommentBtn") : `${t("blog.submitCommentBtn")} »`}
               </button>
             </div>
           </form>
@@ -614,16 +647,20 @@ function Blog() {
 
       if (response.status === 401 && adminToken) {
         clearAdminSession();
-        return false;
+        return 'error';
+      }
+
+      if (response.status === 429) {
+        return 'rate_limit';
       }
 
       if (!response.ok) {
-        return false;
+        return 'error';
       }
 
       // Honeypot returns 200 OK with empty body
       if (response.status === 200) {
-        return true;
+        return 'success';
       }
 
       const createdComment = await response.json();
@@ -634,10 +671,10 @@ function Blog() {
             : post
         )
       );
-      return true;
+      return 'success';
     } catch (error) {
       console.error("Failed to add comment:", error);
-      return false;
+      return 'error';
     }
   };
 
