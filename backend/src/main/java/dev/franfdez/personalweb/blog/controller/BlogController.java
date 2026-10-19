@@ -8,6 +8,7 @@ import dev.franfdez.personalweb.blog.dto.CommentResponseDto;
 import dev.franfdez.personalweb.blog.service.AdminAuthService;
 import dev.franfdez.personalweb.blog.service.BlogService;
 import dev.franfdez.personalweb.blog.service.ImageStorageService;
+import dev.franfdez.personalweb.common.util.RequestUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.io.IOException;
@@ -74,8 +75,12 @@ public class BlogController {
     }
 
     @PostMapping("/admin/login")
-    public ResponseEntity<Map<String, String>> adminLogin(@Valid @RequestBody AdminLoginRequestDto request) {
-        String token = adminAuthService.login(request.password());
+    public ResponseEntity<Map<String, String>> adminLogin(
+            @Valid @RequestBody AdminLoginRequestDto request,
+            HttpServletRequest httpRequest) {
+
+        String clientIp = RequestUtils.extractClientIp(httpRequest);
+        String token = adminAuthService.login(request.password(), clientIp);
         return ResponseEntity.ok(Map.of("token", token));
     }
 
@@ -116,11 +121,10 @@ public class BlogController {
             HttpServletRequest httpRequest) {
 
         boolean isAdmin = adminAuthService.isValidAdminHeader(authHeader);
-        String clientIp = extractClientIp(httpRequest);
+        String clientIp = RequestUtils.extractClientIp(httpRequest);
         CommentResponseDto created = blogService.addComment(postId, requestDto, isAdmin, clientIp);
 
         if (created == null) {
-            // Silently return 200 OK if honeypot was triggered
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
@@ -134,13 +138,5 @@ public class BlogController {
         adminAuthService.requireAdmin(authHeader);
         blogService.deleteComment(commentId);
         return ResponseEntity.noContent().build();
-    }
-
-    private String extractClientIp(HttpServletRequest request) {
-        String forwardedHeader = request.getHeader("X-Forwarded-For");
-        if (forwardedHeader != null && !forwardedHeader.isBlank()) {
-            return forwardedHeader.split(",")[0].trim();
-        }
-        return request.getRemoteAddr();
     }
 }

@@ -1,5 +1,6 @@
 package dev.franfdez.personalweb.contact;
 
+import dev.franfdez.personalweb.common.util.RequestUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.util.Map;
@@ -24,17 +25,9 @@ public class ContactController {
             @Valid @RequestBody ContactRequestDto requestDto,
             HttpServletRequest httpRequest) {
 
-        String clientIp = extractClientIp(httpRequest);
+        String clientIp = RequestUtils.extractClientIp(httpRequest);
         contactService.processContactRequest(requestDto, clientIp);
 
         return ResponseEntity.ok(Map.of("message", "Message sent successfully"));
-    }
-
-    private String extractClientIp(HttpServletRequest request) {
-        String forwardedHeader = request.getHeader("X-Forwarded-For");
-        if (forwardedHeader != null && !forwardedHeader.isBlank()) {
-            return forwardedHeader.split(",")[0].trim();
-        }
-        return request.getRemoteAddr();
     }
 }

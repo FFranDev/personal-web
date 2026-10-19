@@ -1,0 +1,19 @@
+{
+  "properties": [
+    {
+      "name": "app.cors.allowed-origins",
+      "type": "java.lang.String",
+      "description": "Comma-separated list of allowed origins for CORS."
+    },
+    {
+      "name": "app.admin.password",
+      "type": "java.lang.String",
+      "description": "Secret password for blog author mode authentication."
+    },
+    {
+      "name": "app.upload.dir",
+      "type": "java.lang.String",
+      "description": "Filesystem directory path for storing uploaded blog images."
+    }
+  ]
+}
