@@ -201,6 +201,63 @@ input:focus, textarea:focus {
 
 .page-container > :last-child { margin-bottom: 0; }
 
+/* Shared Form Utilities & API Status Feedback */
+.char-counter {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  opacity: 0.6;
+  pointer-events: none;
+  background-color: transparent;
+}
+
+.honeypot-field {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.form-status {
+  flex: 1;
+  font-size: 0.95rem;
+  font-weight: bold;
+}
+
+.status-msg {
+  display: inline-block;
+  padding: 6px 10px;
+  border: var(--border-width) solid var(--main-color);
+  animation: retro-blink-out 0.16s steps(1, end) 4s 6 forwards;
+}
+
+@keyframes retro-blink-out {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.status-msg.success {
+  background-color: var(--main-color);
+  color: var(--bg-color);
+  box-shadow: inset 0 0 0 2px var(--bg-color);
+}
+
+.status-msg.error {
+  background-color: rgba(0, 0, 0, 0.03);
+  color: var(--main-color);
+  box-shadow: inset 4px 4px 0px 0px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 1000px) {
+  .status-msg {
+    display: block;
+    text-align: center;
+  }
+}
+
 @media (max-width: 600px) {
   main {
     padding: 10px;
@@ -209,4 +266,5 @@ input:focus, textarea:focus {
   article, .panel {
     padding: 12px;
   }
+  
 }

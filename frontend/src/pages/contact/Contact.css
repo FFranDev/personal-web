@@ -92,60 +92,11 @@ a.contact-link-btn:active {
   padding-bottom: 28px;
 }
 
-.char-counter {
-  position: absolute;
-  bottom: 8px;
-  right: 12px;
-  font-size: 0.8rem;
-  font-weight: bold;
-  opacity: 0.6;
-  pointer-events: none;
-  background-color: transparent;
-}
-
-.honeypot-field {
-  position: absolute;
-  left: -9999px;
-  opacity: 0;
-  pointer-events: none;
-}
-
 .form-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-}
-
-.form-status {
-  flex: 1;
-  font-size: 0.95rem;
-  font-weight: bold;
-}
-
-.status-msg {
-  display: inline-block;
-  padding: 6px 10px;
-  border: var(--border-width) solid var(--main-color);
-  animation: retro-blink-out 0.16s steps(1, end) 4s 6 forwards;
-}
-
-@keyframes retro-blink-out {
-  0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; }
-}
-
-.status-msg.success {
-  background-color: var(--main-color);
-  color: var(--bg-color);
-  box-shadow: inset 0 0 0 2px var(--bg-color);
-}
-
-.status-msg.error {
-  background-color: rgba(0, 0, 0, 0.03);
-  color: var(--main-color);
-  box-shadow: inset 4px 4px 0px 0px rgba(0, 0, 0, 0.08);
 }
 
 .submit-btn {
@@ -174,11 +125,6 @@ a.contact-link-btn:active {
   .form-footer {
     flex-direction: column;
     align-items: stretch;
-  }
-
-  .status-msg {
-    display: block;
-    text-align: center;
   }
 
   .submit-btn {

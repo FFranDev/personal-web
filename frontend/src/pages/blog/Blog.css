@@ -396,23 +396,6 @@
   padding-bottom: 8px;
 }
 
-.comment-form .char-counter {
-  position: absolute;
-  bottom: 8px;
-  right: 12px;
-  font-size: 0.8rem;
-  font-weight: bold;
-  opacity: 0.6;
-  pointer-events: none;
-}
-
-.honeypot-field {
-  position: absolute;
-  left: -9999px;
-  opacity: 0;
-  pointer-events: none;
-}
-
 .comment-form-footer {
   display: flex;
   justify-content: space-between;
@@ -550,7 +533,7 @@
 
   .bottom-pagination-panel {
     width: auto;
-    align-items: right;
+    align-items: flex-end;
   }
 
   .admin-login-row {
