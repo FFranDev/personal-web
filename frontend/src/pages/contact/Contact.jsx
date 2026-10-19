@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import './Contact.css';
 
 const MAX_MESSAGE_LENGTH = 1500;
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8080';
 
 function Contact() {
   const [t] = useTranslation("global");

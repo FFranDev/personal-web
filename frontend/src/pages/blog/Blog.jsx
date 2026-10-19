@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import './Blog.css';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8080';
 const ADMIN_TOKEN_KEY = 'blog_admin_token';
 const POSTS_PER_PAGE = 5;
 const MAX_COMMENT_LENGTH = 600;
