@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import './Home.css';
 
-import presentationImage from '../../assets/presentation_pic.png';
+import presentationImage from '../../assets/presentation_pic.jpeg';
 
 import logoXeridia from '../../assets/experience/logo_xeridia.png';
 import logoRestauration from '../../assets/experience/logo_restauration.svg';
