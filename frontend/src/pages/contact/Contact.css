@@ -114,6 +114,7 @@ a.contact-link-btn:active {
 @media (max-width: 1000px) {
 .contact-links {
     flex-direction: column;
+    align-items: center;
     gap: 16px;
   }
 
